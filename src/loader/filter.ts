@@ -75,6 +75,7 @@ export function filterResumeForProfile(
         endDate: exp.endDate,
         location: exp.location,
         summary: exp.summary || null,
+        notes: exp.notes || null,
         bullets: bulletsToInclude,
       };
     })
@@ -155,6 +156,7 @@ export function loadFullVaultResumeView(
       endDate: exp.endDate,
       location: exp.location,
       summary: exp.summary || null,
+      notes: exp.notes || null,
       bullets: allBullets,
     };
   });

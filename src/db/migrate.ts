@@ -20,6 +20,18 @@ export async function runMigrations(dbPath = DEFAULT_DB_PATH) {
   }
 
   try {
+    await client.execute("ALTER TABLE experiences ADD COLUMN notes text;");
+  } catch {
+    // Column already exists
+  }
+
+  try {
+    await client.execute("ALTER TABLE personal_info ADD COLUMN notes text;");
+  } catch {
+    // Column already exists
+  }
+
+  try {
     await client.execute("ALTER TABLE education ADD COLUMN courses text;");
   } catch {
     // Column already exists

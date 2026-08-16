@@ -52,6 +52,7 @@ export async function importResumeYaml(
         github: data.personalInfo.github,
         linkedin: data.personalInfo.linkedin,
         summary: data.personalInfo.summary,
+        notes: data.personalInfo.notes,
       })
       .onConflictDoUpdate({
         target: schema.personalInfo.id,
@@ -65,6 +66,7 @@ export async function importResumeYaml(
           github: data.personalInfo.github,
           linkedin: data.personalInfo.linkedin,
           summary: data.personalInfo.summary,
+          notes: data.personalInfo.notes,
         },
       });
   }
@@ -95,6 +97,7 @@ export async function importResumeYaml(
         endDate: exp.endDate,
         location: exp.location,
         summary: exp.summary || null,
+        notes: exp.notes || null,
         orderIndex: exp.orderIndex ?? expIdx + 1,
       })
       .onConflictDoUpdate({
@@ -106,6 +109,7 @@ export async function importResumeYaml(
           endDate: exp.endDate,
           location: exp.location,
           summary: exp.summary || null,
+          notes: exp.notes || null,
           orderIndex: exp.orderIndex ?? expIdx + 1,
         },
       });

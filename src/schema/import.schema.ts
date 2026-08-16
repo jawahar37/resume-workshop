@@ -18,6 +18,7 @@ export const ExperienceImportSchema = z.object({
   endDate: z.string().optional().default("Present"),
   location: z.string().optional(),
   summary: z.string().optional(),
+  notes: z.string().optional(),
   orderIndex: z.number().int().default(0),
   bullets: z.array(BulletImportSchema).default([]),
 });
@@ -97,6 +98,7 @@ export const PersonalInfoImportSchema = z.object({
   github: z.string().optional(),
   linkedin: z.string().optional(),
   summary: z.string().optional(),
+  notes: z.string().optional(),
 });
 
 export const ResumeYamlSchema = z.object({

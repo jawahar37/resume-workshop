@@ -22,6 +22,7 @@ export interface LoadedExperience {
   endDate: string | null;
   location: string | null;
   summary: string | null;
+  notes: string | null;
   orderIndex: number;
   bullets: LoadedBullet[];
 }
@@ -56,6 +57,7 @@ export interface LoadedResume {
     github?: string | null;
     linkedin?: string | null;
     summary?: string | null;
+    notes?: string | null;
   };
   experiences: LoadedExperience[];
   education: Array<{
@@ -90,22 +92,31 @@ export interface LoadedResume {
   }>;
 }
 
+import { runMigrations } from "../db/migrate.js";
+
 export async function loadFullResume(dbPath = DEFAULT_DB_PATH): Promise<LoadedResume> {
+  await runMigrations(dbPath);
   const { db } = getDatabase(dbPath);
 
   // 1. Personal Info
   const [pInfo] = await db.select().from(schema.personalInfo).limit(1);
-  const personalInfo = pInfo || {
-    name: "Unnamed Professional",
-    title: "Software Engineer",
-    email: "user@example.com",
-    phone: null,
-    location: null,
-    website: null,
-    github: null,
-    linkedin: null,
-    summary: null,
-  };
+  const personalInfo = pInfo
+    ? {
+        ...pInfo,
+        notes: pInfo.notes || null,
+      }
+    : {
+        name: "Unnamed Professional",
+        title: "Software Engineer",
+        email: "user@example.com",
+        phone: null,
+        location: null,
+        website: null,
+        github: null,
+        linkedin: null,
+        summary: null,
+        notes: null,
+      };
 
   // 2. Experiences
   const allExperiences = await db
@@ -160,6 +171,7 @@ export async function loadFullResume(dbPath = DEFAULT_DB_PATH): Promise<LoadedRe
     endDate: e.endDate,
     location: e.location,
     summary: e.summary || null,
+    notes: e.notes || null,
     orderIndex: e.orderIndex,
     bullets: expBulletMap.get(e.id) || [],
   }));

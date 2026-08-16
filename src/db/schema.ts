@@ -13,6 +13,7 @@ export const personalInfo = sqliteTable("personal_info", {
   github: text("github"),
   linkedin: text("linkedin"),
   summary: text("summary"),
+  notes: text("notes"), // Freetext career vault context notes
   updatedAt: text("updated_at").default(sql`(CURRENT_TIMESTAMP)`),
 });
 
@@ -25,6 +26,7 @@ export const experiences = sqliteTable("experiences", {
   endDate: text("end_date"), // e.g. "Present" or "2026-08"
   location: text("location"),
   summary: text("summary"), // Optional high-level role overview describing operational scope & context
+  notes: text("notes"), // Freetext role context notes (PRs, tech details, internal team context)
   orderIndex: integer("order_index").notNull().default(0),
   createdAt: text("created_at").default(sql`(CURRENT_TIMESTAMP)`),
   updatedAt: text("updated_at").default(sql`(CURRENT_TIMESTAMP)`),
