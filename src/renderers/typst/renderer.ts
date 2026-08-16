@@ -41,8 +41,14 @@ export function renderTypstSource(resume: FilteredResumeView): string {
   // Format contact items
   const contactParts: string[] = [];
   if (p.email) contactParts.push(`#link("mailto:${p.email}")[${escapeTypst(p.email)}]`);
-  if (p.phone) contactParts.push(escapeTypst(p.phone));
-  if (p.location) contactParts.push(escapeTypst(p.location));
+  if (p.phone) {
+    const cleanPhoneDigits = p.phone.replace(/[^0-9+]/g, "");
+    contactParts.push(`#link("tel:${cleanPhoneDigits}")[${escapeTypst(p.phone)}]`);
+  }
+  if (p.location) {
+    const mapsUrl = `https://maps.google.com/?q=${encodeURIComponent(p.location)}`;
+    contactParts.push(`#link("${mapsUrl}")[${escapeTypst(p.location)}]`);
+  }
   if (p.linkedin) {
     const cleanUrl = p.linkedin.startsWith("http") ? p.linkedin : `https://${p.linkedin}`;
     contactParts.push(`#link("${cleanUrl}")[${escapeTypst(p.linkedin)}]`);
@@ -71,6 +77,7 @@ export function renderTypstSource(resume: FilteredResumeView): string {
 )
 #set par(justify: false, leading: 0.52em)
 #set block(above: 5pt, below: 4pt)
+#show link: set text(fill: rgb("#1d4ed8"))
 
 // Custom heading styles
 #let section-heading(title) = block(above: 10pt, below: 3pt)[
@@ -131,7 +138,12 @@ export function renderTypstSource(resume: FilteredResumeView): string {
     [#text(fill: rgb("#64748b"), size: 8.5pt)[${escapeTypst(exp.location || "")}]],
   )
 ]
-#list(
+`;
+      if (exp.summary) {
+        const cleanSummary = exp.summary.replace(/^Summary:\s*/i, "");
+        content += `#block(above: 2pt, below: 4pt)[#text(size: 8.5pt, fill: rgb("#334155"))[*Summary:* ${escapeTypst(cleanSummary)}]]\n`;
+      }
+      content += `#list(
   tight: true,
   marker: [•],
   spacing: 4pt,
@@ -172,6 +184,24 @@ export function renderTypstSource(resume: FilteredResumeView): string {
     [${escapeTypst(degreeLine)}],
     [#text(fill: rgb("#64748b"), size: 8.5pt)[${escapeTypst(edu.location || "")}]],
   )
+]
+`;
+      if (edu.courses) {
+        content += `#block(above: 2pt, below: 4pt)[#text(size: 8.5pt, fill: rgb("#334155"))[*Courses:* ${escapeTypst(edu.courses)}]]\n`;
+      }
+    }
+  }
+
+  // Academic Projects
+  if (resume.projects && resume.projects.length > 0) {
+    content += `
+#section-heading("Academic Projects")
+`;
+    for (const proj of resume.projects) {
+      content += `
+#block(above: 5pt, below: 3pt)[
+  #text(size: 9.5pt, weight: "bold", fill: rgb("#0f172a"))[${escapeTypst(proj.title)}:]
+  #text(size: 9pt)[ ${escapeTypst(proj.description)}]
 ]
 `;
     }

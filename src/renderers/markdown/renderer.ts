@@ -31,6 +31,9 @@ export function renderMarkdownSource(resume: FilteredResumeView): string {
       const dateRange = exp.endDate ? `${exp.startDate} – ${exp.endDate}` : `${exp.startDate} – Present`;
       lines.push(`### ${exp.roleTitle} — ${exp.company}`);
       lines.push(`*${dateRange}* | *${exp.location || "Remote"}*`);
+      if (exp.summary) {
+        lines.push(`*${exp.summary}*`);
+      }
       lines.push("");
       for (const bullet of exp.bullets) {
         lines.push(`- ${bullet.content}`);
