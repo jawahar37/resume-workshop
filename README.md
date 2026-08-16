@@ -211,11 +211,11 @@ resume-workshop/
 ├── data.seed/                         # [COMMITTED] Seed template for `rw init`
 │   └── resume.yaml
 │
-├── data/                              # [COMMITTED] Human-readable exports & history
-│   ├── resume.yaml                    # Canonical tracked snapshot
-│   └── imports/                       # Timestamped import files
+├── data/                              # [GITIGNORED] Personal user exports, imports & JDs
+│   ├── imports/                       # User YAML resume imports
+│   └── jds/                           # Target Job Description text files
 │
-├── .data/                             # [GITIGNORED] SQLite database
+├── .data/                             # [GITIGNORED] Local vault database & imported resumes
 │   └── resume.db
 │
 ├── src/
