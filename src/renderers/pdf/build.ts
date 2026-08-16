@@ -73,7 +73,9 @@ export function compileTypstToPdf(
   }
 
   try {
-    execSync(`typst compile "${sourcePath}" "${options.outputPath}"`, {
+    const fontsDir = path.resolve(process.cwd(), "fonts");
+    const fontArg = fs.existsSync(fontsDir) ? `--font-path "${fontsDir}" ` : "";
+    execSync(`typst compile ${fontArg}"${sourcePath}" "${options.outputPath}"`, {
       stdio: "pipe",
     });
 
