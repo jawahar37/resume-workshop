@@ -28,9 +28,21 @@ npm install
 # Link CLI globally (optional, enables 'rw' and 'resume-workshop' anywhere)
 npm link
 
-# Install Typst for PDF compilation (macOS)
-brew install typst
+# Install Typst for PDF compilation:
+# macOS:   brew install typst
+# Windows: winget install typst.typst
+# Linux:   snap install typst (or pacman -S typst)
 ```
+
+#### 🖥️ Cross-Platform OS Support
+
+| Operating System | Typst Package Manager Command | PDF Viewer Integration (`rw preview`) |
+| :--- | :--- | :--- |
+| **macOS** | `brew install typst` | Native `open` |
+| **Windows** | `winget install typst.typst` | Native `start` |
+| **Linux** | `snap install typst` or `pacman -S typst` | Standard `xdg-open` |
+
+*Runs headlessly in Linux CI/CD pipelines & Docker containers without requiring a display server.*
 
 ### 2. Initialize the Vault
 

@@ -20,8 +20,9 @@ export function getDatabase(dbPath = DEFAULT_DB_PATH) {
     fs.mkdirSync(dir, { recursive: true });
   }
 
+  const normalizedPath = resolved.replace(/\\/g, "/");
   const client = createClient({
-    url: `file:${resolved}`,
+    url: `file:${normalizedPath}`,
   });
 
   const db = drizzle(client, { schema });

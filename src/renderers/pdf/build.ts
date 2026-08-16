@@ -58,7 +58,7 @@ export function compileTypstToPdf(
       pdfPath: options.outputPath,
       typSourcePath: sourcePath,
       typstInstalled: false,
-      message: `Typst binary not found. Generated Typst markup at ${sourcePath}. Install Typst with: brew install typst`,
+      message: `Typst binary not found. Generated Typst markup at ${sourcePath}. Install Typst with: 'winget install typst.typst' (Windows) or 'brew install typst' (macOS/Linux)`,
       stats: resume.stats,
     };
   }
