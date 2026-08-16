@@ -9,13 +9,23 @@ description: |
 
 Transforms messy work notes into high-impact, quantified resume bullets aligned with Klinkenborg house style and executive positioning rules.
 
-## Quick Start
+## Modes of Operation
 
-1. Ask the user for raw context about what they built, solved, or improved.
-2. Draft 2–3 distinct bullet variants highlighting different dimensions (Technical Depth, Business Impact / Dependability, Leadership Scope).
-3. Ensure bullets follow the **5 Strategic Guidelines** ('Safe Pair of Hands', Transferable Vocabulary, Senior Power Verbs, 2-3 Year Recency Focus, Balanced Range).
-4. Present the variants to the user.
-5. Save active selection and preserve unpicked variants as inactive alternates in the vault.
+### Mode 1: Quick Draft Mode
+Transform raw bullet notes or single project snippets directly into STAR bullets.
+
+### Mode 2: Grill-Me Mode (Interactive Discovery Interview)
+Use when expanding a key role (e.g. current SDE2/Senior role) to discover hidden accomplishments, quantify scope, and elevate technical positioning.
+
+#### Grill-Me Interview Workflow:
+1. **Target Identification**: Identify the role (e.g. target role `target-swe`) and target SDE2/Senior responsibilities.
+2. **Probing Categories**: Ask 3–4 focused, leading questions covering:
+   - **Systems Architecture & Scale**: High-throughput pipelines, AWS cloud infra, async I/O, database optimization, microservices.
+   - **SDE2 Ownership & Rigor**: API design, fault tolerance, edge-case resilience, SDLC standards, CI/CD security.
+   - **Quantified Business Impact**: Latency cuts, cost savings, risk/compliance mitigation, operational efficiency.
+   - **Cross-Role Consolidation**: Identifying skills mentioned in older roles (e.g., testing, reporting, onboarding) and pulling them forward into the current role to tighten older roles.
+3. **Synthesis**: Turn raw answers into sharp, quantified STAR bullets following Klinkenborg house style.
+4. **Vault Integration**: Add new bullets to vault and adjust alternate points.
 
 ## Core Strategic Guidelines
 
@@ -28,6 +38,20 @@ Every drafted bullet must adhere to `.agents/skills/resume-bullet-drafter/refere
 5. **Demonstrate Balanced Range**: Every bullet pack must balance **Technical Credibility**, **Business Impact**, and **Leadership Scope**.
 
 ## Workflow
+
+### Step 0: Role Summary Framing (4 Hiring Manager Lenses)
+Before drafting accomplishment bullets for a key role, evaluate if the high-level **Role Summary** needs reframing. A strong Role Summary anchors domain, scale, stack, and operational mandate—liberating individual accomplishment bullets to evolve freely and focus on technical depth, trade-offs, and quantified impact without repeating background boilerplate.
+
+Offer 4 varied hiring manager perspectives:
+1. **Core Systems Resilience**: High availability, fault tolerance, idempotency, event-driven design, zero data loss.
+2. **Security & Risk Mitigation**: Zero-trust controls, PII protection, audit trails, compliance automation (S-SDLC).
+3. **API Platform Velocity**: Contract-first design (OpenAPI), OpenTelemetry observability, developer platform tools.
+4. **Data Platform & Analytics**: Snowflake warehousing, Databricks ETL, real-time ledger reconciliation.
+
+Update chosen summary:
+```bash
+rw experience add -i <exp-id> -c "<Company>" -t "<Title>" -s "<YYYY-MM>" --summary "<New-Summary-Text>"
+```
 
 ### Step 1: Gather Raw Accomplishment Notes
 Ask the user:
