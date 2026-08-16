@@ -52,9 +52,9 @@ export function renderTypstSource(resume: FilteredResumeView): string {
 
 // Custom heading styles
 #let section-heading(title) = {
-  v(9pt)
-  text(size: 10.5pt, weight: "bold", fill: rgb("#0f172a"), tracking: 0.08em)[#upper(title)]
   v(1.5pt)
+  text(size: 10.5pt, weight: "bold", fill: rgb("#0f172a"), tracking: 0.08em)[#upper(title)]
+  v(-3.5pt)
 }
 
 // Header
@@ -85,13 +85,13 @@ export function renderTypstSource(resume: FilteredResumeView): string {
       content += `
 #grid(
   columns: (1fr, auto),
-  row-gutter: 2.5pt,
+  row-gutter: 3.5pt,
   [*${escapeTypst(exp.company)}*],
   [#text(fill: rgb("#64748b"), size: 8.5pt)[${escapeTypst(dateRange)}]],
   [#emph[${escapeTypst(exp.roleTitle)}]],
   [#text(fill: rgb("#64748b"), size: 8.5pt)[${escapeTypst(exp.location || "")}]],
 )
-#v(-1.5pt)
+#v(-5.5pt)
 #list(
   tight: true,
   marker: [•],
@@ -101,7 +101,7 @@ export function renderTypstSource(resume: FilteredResumeView): string {
         content += `  [${escapeTypst(bullet.content)}],\n`;
       }
       content += `)
-#v(3pt)
+#v(-1.5pt)
 `;
     }
   }
@@ -127,12 +127,13 @@ export function renderTypstSource(resume: FilteredResumeView): string {
       content += `
 #grid(
   columns: (1fr, auto),
+  row-gutter: 3.5pt,
   [*${escapeTypst(edu.institution)}*],
   [#text(fill: rgb("#64748b"), size: 8.5pt)[${escapeTypst(eduDate)}]],
   [${escapeTypst(degreeLine)}],
   [#text(fill: rgb("#64748b"), size: 8.5pt)[${escapeTypst(edu.location || "")}]],
 )
-#v(2pt)
+#v(6pt)
 `;
     }
   }
