@@ -40,7 +40,7 @@ export function renderTypstSource(resume: FilteredResumeView): string {
   let content = `// Resume Workshop — Typst Opinionated Default Template
 #set page(
   paper: "us-letter",
-  margin: (x: 1.5cm, y: 1.4cm),
+  margin: (x: 1.5cm, top: 0.8cm, bottom: 1.4cm),
 )
 #set text(
   font: ("Helvetica", "Arial", "Liberation Sans", "DejaVu Sans"),
@@ -52,19 +52,15 @@ export function renderTypstSource(resume: FilteredResumeView): string {
 
 // Custom heading styles
 #let section-heading(title) = {
-  v(8pt)
-  text(size: 11pt, weight: "bold", fill: rgb("#0f172a"))[#upper(title)]
-  v(-3pt)
-  line(length: 100%, stroke: 0.75pt + rgb("#cbd5e1"))
-  v(3pt)
+  v(9pt)
+  text(size: 10.5pt, weight: "bold", fill: rgb("#0f172a"), tracking: 0.08em)[#upper(title)]
+  v(1.5pt)
 }
 
 // Header
 #align(center)[
   #text(size: 18pt, weight: "bold", fill: rgb("#0f172a"))[${escapeTypst(p.name)}] \\
   #v(2pt)
-  #text(size: 10.5pt, weight: "medium", fill: rgb("#475569"))[${escapeTypst(p.title)}] \\
-  #v(3pt)
   #text(size: 8.5pt, fill: rgb("#64748b"))[
     ${contactLine}
   ]
@@ -89,16 +85,17 @@ export function renderTypstSource(resume: FilteredResumeView): string {
       content += `
 #grid(
   columns: (1fr, auto),
+  row-gutter: 2.5pt,
   [*${escapeTypst(exp.company)}*],
   [#text(fill: rgb("#64748b"), size: 8.5pt)[${escapeTypst(dateRange)}]],
   [#emph[${escapeTypst(exp.roleTitle)}]],
   [#text(fill: rgb("#64748b"), size: 8.5pt)[${escapeTypst(exp.location || "")}]],
 )
-#v(-2pt)
+#v(-1.5pt)
 #list(
   tight: true,
   marker: [•],
-  spacing: 4.5pt,
+  spacing: 4pt,
 `;
       for (const bullet of exp.bullets) {
         content += `  [${escapeTypst(bullet.content)}],\n`;
