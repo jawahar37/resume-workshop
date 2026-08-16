@@ -1,6 +1,6 @@
 # Resume Workshop (`rw`) 🛠️
 
-> **A career workshop where accomplishments are crafted, stored, and rendered into high-precision Typst resumes on demand.**
+> **A career workshop where accomplishments are crafted, stored, and rendered into high-precision PDF resumes on demand.**
 
 *Render* is the operative word across every layer: render master data from raw input, render across time and situation, render to context, render to target profiles, and render smart considerations into the project itself.
 
@@ -11,8 +11,7 @@
 1. **The Career Vault**: Your career history is not a static document you constantly delete and rewrite. It is a relational vault (SQLite + Drizzle ORM). Each role holds many bullet points, both active accomplishments and alternate points highlighting different dimensions of your work.
 2. **The Question & The Answer**: Job Descriptions are the *question* posed by recruiters and hiring managers; your resume is the *text that answers*. Store target JDs in the vault to analyze requirements and adapt profiles.
 3. **Typst Rendering**: Ultra-fast (~50ms) compilation with readable syntax and publication-grade typography.
-4. **Knowledge in the World**: Grounded in Don Norman’s design principles. Zero memorization required — the system carries the mental load with actionable feedback and clear signifiers.
-5. **Klinkenborg House Style**: Writing is revision. Every accomplishment bullet is composed, revised, and edited as a single, deliberate act.
+4. **Klinkenborg House Style**: Writing is revision. Every accomplishment bullet is composed, revised, and edited as a single, deliberate act.
 
 ---
 
@@ -67,6 +66,69 @@ rw preview --profile staff-eng
 
 # List all built outputs
 rw list-outputs
+```
+
+## 🤖 Agent-Driven Workflow & Fast-Track Guide
+
+Resume Workshop treats **AI Agents as first-class interfaces**. You interact with specialized workflow skills in [`.agents/skills/`](file:///.agents/skills/) to import history, analyze job descriptions, draft bullets, and target profiles. The `rw` CLI provides the underlying tool grounding for deterministic database operations and PDF compilation.
+
+---
+
+### 1. Import Resume into Vault
+Use the **`resume-importer`** skill ([`.agents/skills/resume-importer`](file:///.agents/skills/resume-importer/SKILL.md)) to parse raw text, Markdown, or LinkedIn exports into relational SQLite entities:
+
+```bash
+# Vault Import Grounding:
+rw import --yaml data/imports/jawahar-pinnelli.yaml --replace
+```
+
+---
+
+### 2. Analyze Target Job Descriptions & Skill Gaps
+Use the **`jd-match-analyzer`** skill ([`.agents/skills/jd-match-analyzer`](file:///.agents/skills/jd-match-analyzer/SKILL.md)) to ingest job descriptions, extract key requirements, and identify missing skill tags against existing vault bullets:
+
+```bash
+# Job Description Grounding:
+rw jd add --id "sams-backend-lead" --company "Sam's Club" --role "Senior Backend Engineer" --file "data/jds/sams-club.txt"
+rw jd show --id "sams-backend-lead"
+```
+
+---
+
+### 3. Draft & Revise STAR Accomplishments
+Use the **`resume-bullet-drafter`** skill ([`.agents/skills/resume-bullet-drafter`](file:///.agents/skills/resume-bullet-drafter/SKILL.md)) to refine raw work notes into quantified STAR bullets following Klinkenborg house style rules:
+
+```bash
+# Bullet & Experience Grounding:
+rw experience show --id "acme-cloud-swe"
+rw bullet update --id "acme-kafka-pipeline" --content "Engineered a distributed event streaming pipeline in Go using Kafka and gRPC, cutting p99 API latency from 450ms to 85ms across 10M daily active users."
+```
+
+---
+
+### 4. Generate Recruiter Pitches & Outreach
+Use the **`recruiter-pitch-generator`** skill ([`.agents/skills/recruiter-pitch-generator`](file:///.agents/skills/recruiter-pitch-generator/SKILL.md)) to synthesize targeted 30-second LinkedIn elevator pitches and cold outreach messages grounded in master vault accomplishments.
+
+---
+
+### 5. Create Target Profiles & Auto-Select Optimal Bullets
+Create job-specific target profiles and automatically filter the highest-scoring bullet points to fit target page budgets:
+
+```bash
+# Target Profile Grounding:
+rw profile create --id "backend-lead" --name "Senior Backend Engineer"
+rw profile auto-select --id "backend-lead" --max 25
+```
+
+---
+
+### 6. Preview & Compile High-Precision PDFs
+Compile publication-grade PDF and ATS plain-text outputs instantaneously:
+
+```bash
+# PDF Compilation Grounding:
+rw preview --profile backend-lead
+rw build
 ```
 
 ---
