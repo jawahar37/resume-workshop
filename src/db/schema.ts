@@ -24,6 +24,7 @@ export const experiences = sqliteTable("experiences", {
   startDate: text("start_date").notNull(), // e.g. "2024-03"
   endDate: text("end_date"), // e.g. "Present" or "2026-08"
   location: text("location"),
+  summary: text("summary"), // Optional high-level role overview describing operational scope & context
   orderIndex: integer("order_index").notNull().default(0),
   createdAt: text("created_at").default(sql`(CURRENT_TIMESTAMP)`),
   updatedAt: text("updated_at").default(sql`(CURRENT_TIMESTAMP)`),
@@ -144,6 +145,7 @@ export const education = sqliteTable("education", {
   startDate: text("start_date"),
   endDate: text("end_date"),
   location: text("location"),
+  courses: text("courses"),
   orderIndex: integer("order_index").notNull().default(0),
 });
 
@@ -152,5 +154,15 @@ export const skillGroups = sqliteTable("skill_groups", {
   id: text("id").primaryKey(),
   category: text("category").notNull(), // e.g. "Languages & Runtimes"
   items: text("items").notNull(), // comma-separated or list: "TypeScript, Go, Rust, Python, C++"
+  orderIndex: integer("order_index").notNull().default(0),
+});
+
+// Academic & Side Projects
+export const projects = sqliteTable("projects", {
+  id: text("id").primaryKey(),
+  title: text("title").notNull(),
+  description: text("description").notNull(),
+  technologies: text("technologies"),
+  url: text("url"),
   orderIndex: integer("order_index").notNull().default(0),
 });

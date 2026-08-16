@@ -37,6 +37,7 @@ CREATE TABLE `experiences` (
 	`start_date` text NOT NULL,
 	`end_date` text,
 	`location` text,
+	`summary` text,
 	`order_index` integer DEFAULT 0 NOT NULL,
 	`created_at` text DEFAULT (CURRENT_TIMESTAMP),
 	`updated_at` text DEFAULT (CURRENT_TIMESTAMP)

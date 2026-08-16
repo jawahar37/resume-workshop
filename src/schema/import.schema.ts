@@ -17,6 +17,7 @@ export const ExperienceImportSchema = z.object({
   startDate: z.string().min(1, "Start date is required"),
   endDate: z.string().optional().default("Present"),
   location: z.string().optional(),
+  summary: z.string().optional(),
   orderIndex: z.number().int().default(0),
   bullets: z.array(BulletImportSchema).default([]),
 });
@@ -29,6 +30,16 @@ export const EducationImportSchema = z.object({
   startDate: z.string().optional(),
   endDate: z.string().optional(),
   location: z.string().optional(),
+  courses: z.string().optional(),
+  orderIndex: z.number().int().default(0),
+});
+
+export const ProjectImportSchema = z.object({
+  id: z.string().optional(),
+  title: z.string().min(1, "Project title is required"),
+  description: z.string().min(1, "Project description is required"),
+  technologies: z.string().optional(),
+  url: z.string().optional(),
   orderIndex: z.number().int().default(0),
 });
 
@@ -63,7 +74,17 @@ export const JobDescriptionImportSchema = z.object({
   roleTitle: z.string().min(1, "Role title is required"),
   rawText: z.string().min(1, "Raw text is required"),
   url: z.string().optional(),
-  requirements: z.array(JdRequirementImportSchema).default([]),
+  requirements: z
+    .array(
+      z.object({
+        id: z.string().optional(),
+        text: z.string().min(1, "Requirement text is required"),
+        weight: z.enum(["high", "medium", "low"]).default("medium"),
+        tags: z.array(z.string()).default([]),
+      })
+    )
+    .optional()
+    .default([]),
 });
 
 export const PersonalInfoImportSchema = z.object({
@@ -82,6 +103,7 @@ export const ResumeYamlSchema = z.object({
   personalInfo: PersonalInfoImportSchema,
   experiences: z.array(ExperienceImportSchema).default([]),
   education: z.array(EducationImportSchema).optional().default([]),
+  projects: z.array(ProjectImportSchema).optional().default([]),
   skillGroups: z.array(SkillGroupImportSchema).optional().default([]),
   targetProfiles: z.array(TargetProfileImportSchema).optional().default([]),
   jobDescriptions: z.array(JobDescriptionImportSchema).optional().default([]),

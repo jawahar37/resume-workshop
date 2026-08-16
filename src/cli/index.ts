@@ -175,6 +175,7 @@ expCmd
   .requiredOption("-s, --start <date>", "Start date (YYYY-MM)")
   .option("-e, --end <date>", "End date (YYYY-MM or Present)")
   .option("-l, --location <loc>", "Location")
+  .option("--summary <text>", "High-level role overview describing operational scope & context")
   .action(addExperience);
 
 // 13. profile subcommands

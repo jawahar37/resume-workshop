@@ -33,6 +33,7 @@ export async function addExperience(options: {
   start: string;
   end?: string;
   location?: string;
+  summary?: string;
 }) {
   if (!options.id || !options.company || !options.title || !options.start) {
     console.error(pc.red("Error: --id, --company, --title, and --start are required."));
@@ -48,6 +49,7 @@ export async function addExperience(options: {
       startDate: options.start,
       endDate: options.end || "Present",
       location: options.location,
+      summary: options.summary,
     })
     .onConflictDoUpdate({
       target: schema.experiences.id,
@@ -57,6 +59,7 @@ export async function addExperience(options: {
         startDate: options.start,
         endDate: options.end || "Present",
         location: options.location,
+        summary: options.summary,
       },
     });
 

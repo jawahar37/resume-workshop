@@ -4,13 +4,40 @@ import path from "node:path";
 import fs from "node:fs";
 
 export async function runMigrations(dbPath = DEFAULT_DB_PATH) {
-  const { db } = getDatabase(dbPath);
+  const { db, client } = getDatabase(dbPath);
   const migrationsFolder = path.resolve(process.cwd(), "drizzle");
 
   if (fs.existsSync(migrationsFolder)) {
     await migrate(db, { migrationsFolder });
   } else {
     console.warn("drizzle migrations folder not found at", migrationsFolder);
+  }
+
+  try {
+    await client.execute("ALTER TABLE experiences ADD COLUMN summary text;");
+  } catch {
+    // Column already exists
+  }
+
+  try {
+    await client.execute("ALTER TABLE education ADD COLUMN courses text;");
+  } catch {
+    // Column already exists
+  }
+
+  try {
+    await client.execute(`
+      CREATE TABLE IF NOT EXISTS projects (
+        id text PRIMARY KEY NOT NULL,
+        title text NOT NULL,
+        description text NOT NULL,
+        technologies text,
+        url text,
+        order_index integer DEFAULT 0 NOT NULL
+      );
+    `);
+  } catch {
+    // Table already exists
   }
 }
 

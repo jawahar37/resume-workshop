@@ -21,6 +21,7 @@ export interface LoadedExperience {
   startDate: string;
   endDate: string | null;
   location: string | null;
+  summary: string | null;
   orderIndex: number;
   bullets: LoadedBullet[];
 }
@@ -33,6 +34,15 @@ export interface LoadedProfile {
   maxPages: number;
   tagWeights: Record<string, string>;
   selectedBulletIds: string[];
+}
+
+export interface LoadedProject {
+  id: string;
+  title: string;
+  description: string;
+  technologies?: string | null;
+  url?: string | null;
+  orderIndex?: number;
 }
 
 export interface LoadedResume {
@@ -56,7 +66,9 @@ export interface LoadedResume {
     startDate?: string | null;
     endDate?: string | null;
     location?: string | null;
+    courses?: string | null;
   }>;
+  projects: LoadedProject[];
   skillGroups: Array<{
     id: string;
     category: string;
@@ -147,6 +159,7 @@ export async function loadFullResume(dbPath = DEFAULT_DB_PATH): Promise<LoadedRe
     startDate: e.startDate,
     endDate: e.endDate,
     location: e.location,
+    summary: e.summary || null,
     orderIndex: e.orderIndex,
     bullets: expBulletMap.get(e.id) || [],
   }));
@@ -157,13 +170,19 @@ export async function loadFullResume(dbPath = DEFAULT_DB_PATH): Promise<LoadedRe
     .from(schema.education)
     .orderBy(asc(schema.education.orderIndex));
 
-  // 7. Skill groups
+  // 7. Projects
+  const allProjects = await db
+    .select()
+    .from(schema.projects)
+    .orderBy(asc(schema.projects.orderIndex));
+
+  // 8. Skill groups
   const allSkills = await db
     .select()
     .from(schema.skillGroups)
     .orderBy(asc(schema.skillGroups.orderIndex));
 
-  // 8. Profiles & Profile Bullets
+  // 9. Profiles & Profile Bullets
   const allProfiles = await db.select().from(schema.targetProfiles);
   const allProfileBullets = await db.select().from(schema.profileBullets);
 
@@ -192,7 +211,7 @@ export async function loadFullResume(dbPath = DEFAULT_DB_PATH): Promise<LoadedRe
     };
   });
 
-  // 9. Job Descriptions & Requirements
+  // 10. Job Descriptions & Requirements
   const allJds = await db.select().from(schema.jobDescriptions);
   const allReqs = await db.select().from(schema.jdRequirements).orderBy(asc(schema.jdRequirements.orderIndex));
   const allReqTags = await db
@@ -235,6 +254,7 @@ export async function loadFullResume(dbPath = DEFAULT_DB_PATH): Promise<LoadedRe
     personalInfo,
     experiences: loadedExperiences,
     education: allEducation,
+    projects: allProjects,
     skillGroups: allSkills,
     targetProfiles: loadedProfiles,
     jobDescriptions: loadedJds,

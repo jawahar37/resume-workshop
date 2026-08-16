@@ -12,9 +12,11 @@ export interface FilteredResumeView {
     startDate: string;
     endDate: string | null;
     location: string | null;
+    summary: string | null;
     bullets: LoadedBullet[];
   }>;
   education: LoadedResume["education"];
+  projects: LoadedResume["projects"];
   skillGroups: LoadedResume["skillGroups"];
   stats: {
     totalMasterBullets: number;
@@ -72,6 +74,7 @@ export function filterResumeForProfile(
         startDate: exp.startDate,
         endDate: exp.endDate,
         location: exp.location,
+        summary: exp.summary || null,
         bullets: bulletsToInclude,
       };
     })
@@ -105,6 +108,7 @@ export function filterResumeForProfile(
     },
     experiences: filteredExperiences,
     education: resume.education,
+    projects: resume.projects || [],
     skillGroups: resume.skillGroups,
     stats: {
       totalMasterBullets,

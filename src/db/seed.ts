@@ -94,6 +94,7 @@ export async function importResumeYaml(
         startDate: exp.startDate,
         endDate: exp.endDate,
         location: exp.location,
+        summary: exp.summary || null,
         orderIndex: exp.orderIndex ?? expIdx + 1,
       })
       .onConflictDoUpdate({
@@ -104,6 +105,7 @@ export async function importResumeYaml(
           startDate: exp.startDate,
           endDate: exp.endDate,
           location: exp.location,
+          summary: exp.summary || null,
           orderIndex: exp.orderIndex ?? expIdx + 1,
         },
       });
@@ -156,6 +158,7 @@ export async function importResumeYaml(
           startDate: edu.startDate,
           endDate: edu.endDate,
           location: edu.location,
+          courses: edu.courses || null,
           orderIndex: edu.orderIndex ?? eduIdx + 1,
         })
         .onConflictDoUpdate({
@@ -167,13 +170,40 @@ export async function importResumeYaml(
             startDate: edu.startDate,
             endDate: edu.endDate,
             location: edu.location,
+            courses: edu.courses || null,
             orderIndex: edu.orderIndex ?? eduIdx + 1,
           },
         });
     }
   }
 
-  // 4. Skill Groups
+  // 4. Projects
+  if (data.projects) {
+    for (const [projIdx, proj] of data.projects.entries()) {
+      const projId = proj.id || `proj-${projIdx + 1}`;
+      await db.insert(schema.projects)
+        .values({
+          id: projId,
+          title: proj.title,
+          description: proj.description,
+          technologies: proj.technologies || null,
+          url: proj.url || null,
+          orderIndex: proj.orderIndex ?? projIdx + 1,
+        })
+        .onConflictDoUpdate({
+          target: schema.projects.id,
+          set: {
+            title: proj.title,
+            description: proj.description,
+            technologies: proj.technologies || null,
+            url: proj.url || null,
+            orderIndex: proj.orderIndex ?? projIdx + 1,
+          },
+        });
+    }
+  }
+
+  // 5. Skill Groups
   if (data.skillGroups) {
     for (const [idx, sg] of data.skillGroups.entries()) {
       const sgId = sg.id || `skills-${idx + 1}`;
@@ -263,14 +293,14 @@ export async function importResumeYaml(
               jdId: jd.id,
               text: req.text,
               weight: req.weight ?? "medium",
-              orderIndex: req.orderIndex ?? rIdx + 1,
+              orderIndex: rIdx + 1,
             })
             .onConflictDoUpdate({
               target: schema.jdRequirements.id,
               set: {
                 text: req.text,
                 weight: req.weight ?? "medium",
-                orderIndex: req.orderIndex ?? rIdx + 1,
+                orderIndex: rIdx + 1,
               },
             });
 
