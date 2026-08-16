@@ -6,7 +6,7 @@ import { loadFullResume } from "../../loader/query.js";
 import { filterResumeForProfile } from "../../loader/filter.js";
 import { compileTypstToPdf, isTypstInstalled } from "../../renderers/pdf/build.js";
 
-export async function previewCommand(options: { profile?: string }) {
+export async function previewCommand(options: { profile?: string; open?: boolean }) {
   const profileId = options.profile || "staff-eng";
   const resume = await loadFullResume();
   const view = filterResumeForProfile(resume, profileId);
@@ -25,17 +25,19 @@ export async function previewCommand(options: { profile?: string }) {
 
   if (res.success && fs.existsSync(pdfPath)) {
     console.log(pc.green(`✓ Compiled preview PDF at: ${pdfPath}`));
-    console.log(pc.gray("Opening in system default viewer..."));
-    try {
-      if (process.platform === "darwin") {
-        execSync(`open "${pdfPath}"`);
-      } else if (process.platform === "win32") {
-        execSync(`start "" "${pdfPath}"`);
-      } else {
-        execSync(`xdg-open "${pdfPath}"`);
+    if (options.open) {
+      console.log(pc.gray("Opening in system default viewer..."));
+      try {
+        if (process.platform === "darwin") {
+          execSync(`open "${pdfPath}"`);
+        } else if (process.platform === "win32") {
+          execSync(`start "" "${pdfPath}"`);
+        } else {
+          execSync(`xdg-open "${pdfPath}"`);
+        }
+      } catch {
+        console.log(`Open manually: ${pdfPath}`);
       }
-    } catch {
-      console.log(`Open manually: ${pdfPath}`);
     }
   } else {
     console.log(pc.yellow(`⚠ ${res.message}`));

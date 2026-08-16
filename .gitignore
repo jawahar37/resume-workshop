@@ -7,6 +7,9 @@ dist/
 # Local Vault & Database
 .data/
 
+# Personal User Data & Exports
+data/
+
 # Logs
 *.log
 

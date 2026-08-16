@@ -14,6 +14,27 @@ function escapeTypst(text: string | null | undefined): string {
     .replace(/\*/g, "\\*");
 }
 
+function formatDate(dateStr?: string | null): string {
+  if (!dateStr) return "";
+  if (dateStr === "Present" || dateStr === "present") return "Present";
+  const match = dateStr.match(/^(\d{4})-(\d{2})$/);
+  if (!match) return dateStr;
+  const year = match[1];
+  const monthNum = parseInt(match[2], 10);
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  if (monthNum >= 1 && monthNum <= 12) {
+    return `${months[monthNum - 1]} ${year}`;
+  }
+  return dateStr;
+}
+
+function formatDateRange(startDate?: string | null, endDate?: string | null): string {
+  const start = formatDate(startDate);
+  const end = formatDate(endDate) || "Present";
+  if (!start) return end;
+  return `${start} – ${end}`;
+}
+
 export function renderTypstSource(resume: FilteredResumeView): string {
   const p = resume.personalInfo;
   
@@ -43,23 +64,22 @@ export function renderTypstSource(resume: FilteredResumeView): string {
   margin: (x: 1.5cm, top: 0.8cm, bottom: 1.4cm),
 )
 #set text(
-  font: ("Helvetica", "Arial", "Liberation Sans", "DejaVu Sans"),
+  font: ("Calibri", "Helvetica", "Arial", "Liberation Sans", "DejaVu Sans"),
   size: 9.5pt,
   fill: rgb("#1a1a1a"),
   spacing: 120%,
 )
-#set par(justify: false, leading: 0.55em)
+#set par(justify: false, leading: 0.52em)
+#set block(above: 5pt, below: 4pt)
 
 // Custom heading styles
-#let section-heading(title) = {
-  v(1.5pt)
-  text(size: 10.5pt, weight: "bold", fill: rgb("#0f172a"), tracking: 0.08em)[#upper(title)]
-  v(-3.5pt)
-}
+#let section-heading(title) = block(above: 10pt, below: 3pt)[
+  #text(size: 10.5pt, weight: "bold", fill: rgb("#0f172a"), tracking: 0.08em)[#upper(title)]
+]
 
 // Header
 #align(center)[
-  #text(size: 18pt, weight: "bold", fill: rgb("#0f172a"))[${escapeTypst(p.name)}] \\
+  #text(font: ("Cambria", "Georgia", "Times New Roman"), size: 15pt, weight: "bold", fill: rgb("#0f172a"))[${escapeTypst(p.name)}] \\
   #v(2pt)
   #text(size: 8.5pt, fill: rgb("#64748b"))[
     ${contactLine}
@@ -69,10 +89,28 @@ export function renderTypstSource(resume: FilteredResumeView): string {
 
   // Summary
   if (p.summary) {
+    const summaryLines = p.summary
+      .split("\n")
+      .map((s) => s.trim())
+      .filter((s) => s.length > 0);
+
     content += `
 #section-heading("Professional Summary")
-#text(size: 9pt)[${escapeTypst(p.summary)}]
 `;
+    if (summaryLines.length > 1) {
+      content += `#list(
+  tight: true,
+  marker: [•],
+  spacing: 4pt,
+`;
+      for (const line of summaryLines) {
+        content += `  [${escapeTypst(line)}],\n`;
+      }
+      content += `)
+`;
+    } else {
+      content += `#text(size: 9pt)[${escapeTypst(p.summary)}]\n`;
+    }
   }
 
   // Work Experience
@@ -81,17 +119,18 @@ export function renderTypstSource(resume: FilteredResumeView): string {
 #section-heading("Work Experience")
 `;
     for (const exp of resume.experiences) {
-      const dateRange = exp.endDate ? `${exp.startDate} – ${exp.endDate}` : `${exp.startDate} – Present`;
+      const dateRange = formatDateRange(exp.startDate, exp.endDate);
       content += `
-#grid(
-  columns: (1fr, auto),
-  row-gutter: 3.5pt,
-  [*${escapeTypst(exp.company)}*],
-  [#text(fill: rgb("#64748b"), size: 8.5pt)[${escapeTypst(dateRange)}]],
-  [#emph[${escapeTypst(exp.roleTitle)}]],
-  [#text(fill: rgb("#64748b"), size: 8.5pt)[${escapeTypst(exp.location || "")}]],
-)
-#v(-5.5pt)
+#block(above: 6pt, below: 3pt)[
+  #grid(
+    columns: (1fr, auto),
+    row-gutter: 4pt,
+    [*${escapeTypst(exp.company)}*],
+    [#text(fill: rgb("#64748b"), size: 8.5pt)[${escapeTypst(dateRange)}]],
+    [#emph[${escapeTypst(exp.roleTitle)}]],
+    [#text(fill: rgb("#64748b"), size: 8.5pt)[${escapeTypst(exp.location || "")}]],
+  )
+]
 #list(
   tight: true,
   marker: [•],
@@ -101,7 +140,6 @@ export function renderTypstSource(resume: FilteredResumeView): string {
         content += `  [${escapeTypst(bullet.content)}],\n`;
       }
       content += `)
-#v(-1.5pt)
 `;
     }
   }
@@ -122,18 +160,19 @@ export function renderTypstSource(resume: FilteredResumeView): string {
 #section-heading("Education")
 `;
     for (const edu of resume.education) {
-      const eduDate = edu.endDate ? `${edu.startDate || ""} – ${edu.endDate}` : `${edu.startDate || ""}`;
+      const eduDate = formatDateRange(edu.startDate, edu.endDate);
       const degreeLine = edu.field ? `${edu.degree}, ${edu.field}` : edu.degree;
       content += `
-#grid(
-  columns: (1fr, auto),
-  row-gutter: 3.5pt,
-  [*${escapeTypst(edu.institution)}*],
-  [#text(fill: rgb("#64748b"), size: 8.5pt)[${escapeTypst(eduDate)}]],
-  [${escapeTypst(degreeLine)}],
-  [#text(fill: rgb("#64748b"), size: 8.5pt)[${escapeTypst(edu.location || "")}]],
-)
-#v(6pt)
+#block(above: 5pt, below: 3pt)[
+  #grid(
+    columns: (1fr, auto),
+    row-gutter: 4pt,
+    [*${escapeTypst(edu.institution)}*],
+    [#text(fill: rgb("#64748b"), size: 8.5pt)[${escapeTypst(eduDate)}]],
+    [${escapeTypst(degreeLine)}],
+    [#text(fill: rgb("#64748b"), size: 8.5pt)[${escapeTypst(edu.location || "")}]],
+  )
+]
 `;
     }
   }

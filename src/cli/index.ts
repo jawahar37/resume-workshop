@@ -89,8 +89,9 @@ program
 // 8. preview
 program
   .command("preview")
-  .description("Compile PDF for a profile and open it in the system viewer")
+  .description("Compile single-profile preview PDF in dist/preview/")
   .option("-p, --profile <profile>", "Target profile to preview (default: staff-eng)")
+  .option("-o, --open", "Open PDF in OS system default viewer")
   .action(previewCommand);
 
 // 9. diff
