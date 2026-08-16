@@ -2,7 +2,7 @@ import type { FilteredResumeView } from "../../loader/filter.js";
 import { buildProtectedTermsRegex } from "../../config/protected-terms.js";
 
 // Escape special Typst characters
-function escapeTypst(text: string | null | undefined): string {
+export function escapeTypst(text: string | null | undefined): string {
   if (!text) return "";
   return text
     .replace(/\\/g, "\\\\")
@@ -90,7 +90,7 @@ export function renderTypstSource(resume: FilteredResumeView): string {
 #let section-heading(title) = block(
   stroke: (left: 2.5pt + rgb("#1d4ed8")),
   inset: (left: 7pt),
-  above: 11pt,
+  above: 10pt,
   below: 4pt,
 )[#text(size: 10.5pt, weight: "bold", fill: rgb("#0f172a"))[#upper(title)]]
 
@@ -138,7 +138,7 @@ export function renderTypstSource(resume: FilteredResumeView): string {
     for (const exp of resume.experiences) {
       const dateRange = formatDateRange(exp.startDate, exp.endDate);
       content += `
-#block(above: 6pt, below: 3pt)[
+#block(above: 6pt, below: 4pt)[
   #grid(
     columns: (1fr, auto),
     align: (left, right),
@@ -152,7 +152,7 @@ export function renderTypstSource(resume: FilteredResumeView): string {
 `;
       if (exp.summary) {
         const cleanSummary = exp.summary.replace(/^Summary:\s*/i, "");
-        content += `#block(above: 2pt, below: 4pt)[#text(size: 8.5pt)[*Summary:* ${escapeTypst(cleanSummary)}]]\n`;
+        content += `#block(above: 3pt, below: 4pt)[#text(size: 8.5pt)[*Summary:* ${escapeTypst(cleanSummary)}]]\n`;
       }
       content += `#list(
   tight: true,
@@ -186,7 +186,7 @@ export function renderTypstSource(resume: FilteredResumeView): string {
       const eduDate = formatDateRange(edu.startDate, edu.endDate);
       const degreeLine = edu.field ? `${edu.degree}, ${edu.field}` : edu.degree;
       content += `
-#block(above: 5pt, below: 3pt)[
+#block(above: 5pt, below: 4pt)[
   #grid(
     columns: (1fr, auto),
     align: (left, right),
