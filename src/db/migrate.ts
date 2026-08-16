@@ -32,6 +32,12 @@ export async function runMigrations(dbPath = DEFAULT_DB_PATH) {
   }
 
   try {
+    await client.execute("ALTER TABLE target_profiles ADD COLUMN output_alias text;");
+  } catch {
+    // Column already exists
+  }
+
+  try {
     await client.execute("ALTER TABLE education ADD COLUMN courses text;");
   } catch {
     // Column already exists

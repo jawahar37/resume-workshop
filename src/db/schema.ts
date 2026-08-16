@@ -75,6 +75,7 @@ export const targetProfiles = sqliteTable("target_profiles", {
   id: text("id").primaryKey(), // slug: "staff-eng"
   name: text("name").notNull(), // "Staff Engineer"
   targetRole: text("target_role").notNull(),
+  outputAlias: text("output_alias"), // e.g. "Alex_Mercer_resume"
   summary: text("summary"), // Profile-tailored executive summary
   maxPages: integer("max_pages").notNull().default(1),
   tagWeights: text("tag_weights"), // JSON string: { "Distributed Systems": "high", "Leadership": "medium" }

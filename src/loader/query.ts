@@ -31,6 +31,7 @@ export interface LoadedProfile {
   id: string;
   name: string;
   targetRole: string;
+  outputAlias?: string | null;
   summary: string | null;
   maxPages: number;
   tagWeights: Record<string, string>;
@@ -216,6 +217,7 @@ export async function loadFullResume(dbPath = DEFAULT_DB_PATH): Promise<LoadedRe
       id: p.id,
       name: p.name,
       targetRole: p.targetRole,
+      outputAlias: p.outputAlias || null,
       summary: p.summary,
       maxPages: p.maxPages,
       tagWeights,

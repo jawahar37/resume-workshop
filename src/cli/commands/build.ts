@@ -11,33 +11,11 @@ export async function buildCommand(options: { profile?: string; format?: string 
   console.log(pc.bold("\n🚀 Building Resume Workshop Outputs..."));
   const resume = await loadFullResume();
 
-  const configPath = path.resolve(process.cwd(), "render.config.yaml");
-  let aliasesConfig: Record<string, { profile: string; description?: string }> = {};
-
-  if (fs.existsSync(configPath)) {
-    try {
-      const parsed = YAML.parse(fs.readFileSync(configPath, "utf8"));
-      if (parsed && parsed.aliases) {
-        aliasesConfig = parsed.aliases;
-      }
-    } catch {}
-  }
-
-  // If no aliases configured, use profiles from database
-  if (Object.keys(aliasesConfig).length === 0) {
-    for (const p of resume.targetProfiles) {
-      aliasesConfig[`resume-${p.id}`] = { profile: p.id };
-    }
-  }
-
-  // Filter aliases if --profile specified
-  let targets = Object.entries(aliasesConfig);
-  if (options.profile) {
-    targets = targets.filter(([_, conf]) => conf.profile === options.profile);
-    if (targets.length === 0) {
-      // Create a direct alias for the profile
-      targets = [[`resume-${options.profile}`, { profile: options.profile }]];
-    }
+  const targets: Array<[string, string]> = [];
+  for (const p of resume.targetProfiles) {
+    if (options.profile && p.id !== options.profile) continue;
+    const aliasName = p.outputAlias || `resume-${p.id}`;
+    targets.push([aliasName, p.id]);
   }
 
   const formats = options.format ? options.format.split(",") : ["pdf", "md"];
@@ -47,9 +25,9 @@ export async function buildCommand(options: { profile?: string; format?: string 
   if (!fs.existsSync(aliasesDir)) fs.mkdirSync(aliasesDir, { recursive: true });
   if (!fs.existsSync(textDir)) fs.mkdirSync(textDir, { recursive: true });
 
-  for (const [aliasName, conf] of targets) {
-    const view = filterResumeForProfile(resume, conf.profile);
-    console.log(pc.cyan(`\nRendering alias: ${pc.bold(aliasName)} (profile: ${conf.profile})`));
+  for (const [aliasName, profileId] of targets) {
+    const view = filterResumeForProfile(resume, profileId);
+    console.log(pc.cyan(`\nRendering alias: ${pc.bold(aliasName)} (profile: ${profileId})`));
 
     if (formats.includes("pdf")) {
       const pdfPath = path.join(aliasesDir, `${aliasName}.pdf`);

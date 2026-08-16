@@ -55,6 +55,7 @@ export const TargetProfileImportSchema = z.object({
   id: z.string().min(1, "Profile id is required"),
   name: z.string().min(1, "Profile name is required"),
   targetRole: z.string().min(1, "Target role is required"),
+  outputAlias: z.string().optional(),
   summary: z.string().optional(),
   maxPages: z.number().int().default(1),
   tagWeights: z.record(z.string(), z.string()).optional(),

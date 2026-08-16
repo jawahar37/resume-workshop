@@ -238,6 +238,7 @@ export async function importResumeYaml(
           id: p.id,
           name: p.name,
           targetRole: p.targetRole,
+          outputAlias: p.outputAlias || null,
           summary: p.summary,
           maxPages: p.maxPages ?? 1,
           tagWeights: p.tagWeights ? JSON.stringify(p.tagWeights) : null,
@@ -247,6 +248,7 @@ export async function importResumeYaml(
           set: {
             name: p.name,
             targetRole: p.targetRole,
+            outputAlias: p.outputAlias || null,
             summary: p.summary,
             maxPages: p.maxPages ?? 1,
             tagWeights: p.tagWeights ? JSON.stringify(p.tagWeights) : null,
