@@ -133,15 +133,15 @@ export function renderTypstSource(resume: FilteredResumeView): string {
     columns: (1fr, auto),
     row-gutter: 4pt,
     [*${escapeTypst(exp.company)}*],
-    [#text(fill: rgb("#64748b"), size: 8.5pt)[${escapeTypst(dateRange)}]],
+    [#text(size: 8.5pt)[${escapeTypst(dateRange)}]],
     [#emph[${escapeTypst(exp.roleTitle)}]],
-    [#text(fill: rgb("#64748b"), size: 8.5pt)[${escapeTypst(exp.location || "")}]],
+    [#text(size: 8.5pt)[${escapeTypst(exp.location || "")}]],
   )
 ]
 `;
       if (exp.summary) {
         const cleanSummary = exp.summary.replace(/^Summary:\s*/i, "");
-        content += `#block(above: 2pt, below: 4pt)[#text(size: 8.5pt, fill: rgb("#334155"))[*Summary:* ${escapeTypst(cleanSummary)}]]\n`;
+        content += `#block(above: 2pt, below: 4pt)[#text(size: 8.5pt)[*Summary:* ${escapeTypst(cleanSummary)}]]\n`;
       }
       content += `#list(
   tight: true,
@@ -180,14 +180,14 @@ export function renderTypstSource(resume: FilteredResumeView): string {
     columns: (1fr, auto),
     row-gutter: 4pt,
     [*${escapeTypst(edu.institution)}*],
-    [#text(fill: rgb("#64748b"), size: 8.5pt)[${escapeTypst(eduDate)}]],
+    [#text(size: 8.5pt)[${escapeTypst(eduDate)}]],
     [${escapeTypst(degreeLine)}],
-    [#text(fill: rgb("#64748b"), size: 8.5pt)[${escapeTypst(edu.location || "")}]],
+    [#text(size: 8.5pt)[${escapeTypst(edu.location || "")}]],
   )
 ]
 `;
       if (edu.courses) {
-        content += `#block(above: 2pt, below: 4pt)[#text(size: 8.5pt, fill: rgb("#334155"))[*Courses:* ${escapeTypst(edu.courses)}]]\n`;
+        content += `#block(above: 2pt, below: 4pt)[#text(size: 8.5pt)[*Courses:* ${escapeTypst(edu.courses)}]]\n`;
       }
     }
   }
