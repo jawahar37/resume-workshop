@@ -93,8 +93,8 @@ export function renderTypstSource(resume: FilteredResumeView): string {
 
 // Header
 #align(center)[
-  #text(font: ("Cambria", "Georgia", "Times New Roman"), size: 15pt, weight: "bold", fill: rgb("#0f172a"))[${escapeTypst(p.name)}] \\
-  #v(2pt)
+  #text(font: ("Cambria", "Caladea", "Georgia", "Times New Roman"), size: 16pt, weight: "bold", fill: rgb("#0f172a"))[${escapeTypst(p.name)}] \\
+  #v(4pt)
   #text(size: 8.5pt, fill: rgb("#64748b"))[
     ${contactLine}
   ]
@@ -164,7 +164,7 @@ export function renderTypstSource(resume: FilteredResumeView): string {
 #section-heading("Technical Skills")
 `;
     for (const sg of resume.skillGroups) {
-      content += `#text(size: 9pt)[*${escapeTypst(sg.category)}:* ${escapeTypst(sg.items)}] \\ \n`;
+      content += `#text(size: 9.5pt)[*${escapeTypst(sg.category)}:* ${escapeTypst(sg.items)}] \\ \n`;
     }
   }
 
