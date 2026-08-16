@@ -2,6 +2,8 @@ import fs from "node:fs";
 import path from "node:path";
 import { execSync } from "node:child_process";
 import { renderTypstSource } from "../typst/renderer.js";
+import { renderTypstSkillHeatmapSource } from "../typst/heatmap-renderer.js";
+import { renderTypstFullVaultSource } from "../typst/full-vault-renderer.js";
 import type { FilteredResumeView } from "../../loader/filter.js";
 
 export function isTypstInstalled(): boolean {
@@ -17,6 +19,9 @@ export interface BuildPdfOptions {
   outputPath: string;
   sourcePath?: string;
   keepSource?: boolean;
+  heatmap?: boolean;
+  llm?: boolean;
+  fullVault?: boolean;
 }
 
 export interface BuildPdfResult {
@@ -32,7 +37,11 @@ export function compileTypstToPdf(
   resume: FilteredResumeView,
   options: BuildPdfOptions
 ): BuildPdfResult {
-  const typContent = renderTypstSource(resume);
+  const typContent = options.fullVault
+    ? renderTypstFullVaultSource(resume)
+    : options.heatmap
+    ? renderTypstSkillHeatmapSource(resume, { llm: options.llm })
+    : renderTypstSource(resume);
   const pdfOutDir = path.dirname(options.outputPath);
   if (!fs.existsSync(pdfOutDir)) {
     fs.mkdirSync(pdfOutDir, { recursive: true });

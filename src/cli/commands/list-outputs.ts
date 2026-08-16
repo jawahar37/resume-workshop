@@ -10,9 +10,38 @@ export async function listOutputsCommand() {
   const aliasesDir = path.join(distDir, "aliases");
   const artifactsDir = path.join(distDir, "artifacts");
   const textDir = path.join(distDir, "text");
+  const previewDir = path.join(distDir, "preview");
+
+  // Profile Multi-View Previews
+  console.log(pc.bold(pc.blue("Profile Multi-View Previews (dist/preview/<profile-id>/):")));
+  if (fs.existsSync(previewDir)) {
+    const entries = fs.readdirSync(previewDir).filter((f) => !f.startsWith("."));
+    const profileDirs = entries.filter((e) => fs.statSync(path.join(previewDir, e)).isDirectory());
+
+    if (profileDirs.length > 0) {
+      const table = new Table({
+        head: [pc.bold("Profile Folder"), pc.bold("Multi-View PDFs"), pc.bold("Last Modified")],
+      });
+
+      for (const pDir of profileDirs) {
+        const fullPDir = path.join(previewDir, pDir);
+        const pdfFiles = fs
+          .readdirSync(fullPDir)
+          .filter((f) => f.endsWith(".pdf"))
+          .sort();
+        const stat = fs.statSync(fullPDir);
+        table.push([pDir, pdfFiles.join(", ") || "(empty)", stat.mtime.toLocaleString()]);
+      }
+      console.log(table.toString());
+    } else {
+      console.log(pc.gray("  (No profile previews generated yet. Run 'rw preview'.)"));
+    }
+  } else {
+    console.log(pc.gray("  (Directory not created yet.)"));
+  }
 
   // Aliases
-  console.log(pc.bold(pc.cyan("Always-Current Aliases (dist/aliases/):")));
+  console.log(pc.bold(pc.cyan("\nAlways-Current Aliases (dist/aliases/):")));
   if (fs.existsSync(aliasesDir)) {
     const files = fs.readdirSync(aliasesDir).filter((f) => !f.startsWith("."));
     if (files.length > 0) {

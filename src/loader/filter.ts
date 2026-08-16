@@ -119,3 +119,69 @@ export function filterResumeForProfile(
     },
   };
 }
+
+/**
+ * Creates a Full Vault view showing ALL bullets (active & inactive) for each experience.
+ */
+export function loadFullVaultResumeView(
+  resume: LoadedResume,
+  profileId?: string
+): FilteredResumeView {
+  const profile = profileId
+    ? resume.targetProfiles.find((p) => p.id === profileId)
+    : resume.targetProfiles[0];
+
+  const selectedBulletIds = new Set(profile?.selectedBulletIds || []);
+
+  const fullExperiences = resume.experiences.map((exp) => {
+    // Include ALL bullets for each experience, preserving priority order
+    const allBullets = [...exp.bullets].sort((a, b) => {
+      // Show active selected bullets first, then by priority
+      const aIsActive = selectedBulletIds.size > 0 ? selectedBulletIds.has(a.id) : a.isActive;
+      const bIsActive = selectedBulletIds.size > 0 ? selectedBulletIds.has(b.id) : b.isActive;
+      if (aIsActive !== bIsActive) return aIsActive ? -1 : 1;
+      return a.priority - b.priority;
+    }).map((b) => ({
+      ...b,
+      // Ensure isActive reflects current profile active state
+      isActive: selectedBulletIds.size > 0 ? selectedBulletIds.has(b.id) : b.isActive,
+    }));
+
+    return {
+      id: exp.id,
+      company: exp.company,
+      roleTitle: exp.roleTitle,
+      startDate: exp.startDate,
+      endDate: exp.endDate,
+      location: exp.location,
+      summary: exp.summary || null,
+      bullets: allBullets,
+    };
+  });
+
+  const totalBulletsCount = fullExperiences.reduce(
+    (sum, e) => sum + e.bullets.length,
+    0
+  );
+
+  return {
+    profileId: profile?.id ?? null,
+    profileName: (profile?.name ?? "Master Vault") + " (Full Vault View)",
+    maxPages: 99,
+    personalInfo: {
+      ...resume.personalInfo,
+      summary: profile?.summary || resume.personalInfo.summary,
+    },
+    experiences: fullExperiences,
+    education: resume.education,
+    projects: resume.projects || [],
+    skillGroups: resume.skillGroups,
+    stats: {
+      totalMasterBullets: totalBulletsCount,
+      selectedBulletsCount: totalBulletsCount,
+      estimatedPageCount: Math.ceil(totalBulletsCount / 12),
+      maxPages: 99,
+      isOverLimit: false,
+    },
+  };
+}
