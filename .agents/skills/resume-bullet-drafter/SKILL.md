@@ -1,13 +1,13 @@
 ---
 name: resume-bullet-drafter
 description: |
-  Helps software engineers transform raw work notes, PR descriptions, and career accomplishments into sharp, quantified STAR bullets following the Verlyn Klinkenborg house style and 5 Strategic Positioning Guidelines.
+  Helps software engineers transform raw work notes, PR descriptions, and career accomplishments into sharp, quantified STAR bullets following the Verlyn Klinkenborg house style, 5 Strategic Positioning Guidelines, and Big-Tech Bar-Raiser standards.
   Use when the user wants to write, revise, or refine accomplishment bullets for their resume or add alternate points to an experience.
 ---
 
 # Resume Bullet Drafter
 
-Transforms messy work notes into high-impact, quantified resume bullets aligned with Klinkenborg house style and executive positioning rules.
+Transforms messy work notes into high-impact, quantified resume bullets aligned with Klinkenborg house style, executive positioning rules, and Big-Tech bar-raiser standards.
 
 ## Modes of Operation
 
@@ -24,8 +24,29 @@ Use when expanding a key role (e.g. current SDE2/Senior role) to discover hidden
    - **SDE2 Ownership & Rigor**: API design, fault tolerance, edge-case resilience, SDLC standards, CI/CD security.
    - **Quantified Business Impact**: Latency cuts, cost savings, risk/compliance mitigation, operational efficiency.
    - **Cross-Role Consolidation**: Identifying skills mentioned in older roles (e.g., testing, reporting, onboarding) and pulling them forward into the current role to tighten older roles.
+   - **Bar-Raiser Stress Test**: Ask "How would you defend this bullet in a 45-minute behavioral interview? What follow-up questions would expose gaps?"
 3. **Synthesis**: Turn raw answers into sharp, quantified STAR bullets following Klinkenborg house style.
 4. **Vault Integration**: Add new bullets to vault and adjust alternate points.
+
+### Mode 3: JD-Driven Scope Expansion
+Use when the user says "write more points," "expand," "what else," "target for X company," or "write for FinTech/B2B/Cloud." This mode creates entirely new content instead of refining existing bullets.
+
+#### Expansion Workflow:
+1. **Mine, Don't Mirror**: Read the target JD (or domain signal catalog from `references/bar-raiser-checklist.md` if no specific JD). Extract technologies, architectural patterns, and scale metrics that have **zero coverage** in the user's existing vault.
+2. **Draft Net-New Bullets**: For each uncovered signal, draft a brand-new accomplishment bullet that credibly incorporates that technology into the user's actual work context. These are NOT rewrites of existing bullets.
+3. **Domain Pivot on Demand**: When the user says "target for X" or "write for Y," switch to the corresponding domain signal catalog and generate bullets using that domain's specific vocabulary:
+   - "Target Google/Microsoft" → QPS, P99 SLAs, gRPC/Protobuf, OpenTelemetry, canary rollouts, backward-compatible APIs
+   - "Write for FinTech" → ledger reconciliation, PCI-DSS, idempotent payment processing, fraud scoring, KYC/AML
+   - "Write for B2B SaaS" → multi-tenant RLS, webhook delivery, Enterprise SSO, metered billing, white-label config
+   - "Target E-Commerce" → search ranking, recommendation engines, cart integrity, A/B testing infra, CDN edge caching
+   - "Write for HealthTech" → HIPAA compliance, HL7/FHIR interop, PHI encryption, EHR integration, clinical pipelines
+   - "Target Security roles" → zero-trust, SAST/DAST automation, secrets management, SBOM, shift-left security
+   - "Write for Data Engineering" → Spark/Flink, Delta Lake/Iceberg, CDC pipelines, dbt, data quality frameworks
+   - "Target Gaming" → WebSocket real-time, tick-rate optimization, ECS architecture, matchmaking, state sync
+   - "Write for Consumer/EdTech" → mobile-first, push notifications, engagement funnels, accessibility, offline-first sync
+   - "Target Consulting" → legacy modernization, mainframe migration, vendor API integration, SOW delivery
+4. **Present as Additive Options**: Offer 6–8 net-new bullets organized by domain signal, clearly labeled as vault expansion candidates (not replacements).
+5. **Vault Integration**: Selected bullets are added as new inactive alternates in the vault, available for future profile targeting.
 
 ## Core Strategic Guidelines
 
@@ -60,17 +81,38 @@ Ask the user:
 - What was the quantified outcome (latency, throughput, revenue, cost, adoption, delay reduction)?
 - How long ago was this role? (If >3 years old, aim for 2-3 summary bullets).
 
-### Step 2: Draft 2–3 Dimensional Variants
+### Step 1.5: Bar-Raiser Diagnostic
+
+Before drafting any variant, run each raw bullet through the **5-Point Bar-Raiser Diagnostic** from `references/bar-raiser-checklist.md`:
+
+1. **Vague Adjective Check**: Flag `resilient`, `high-concurrency`, `high-volume`, `complex`, `critical` when not backed by a named mechanism or metric.
+2. **Technical Misnomer Check**: Catch misused terms (`latency reduction` for batch runtime, `scalable` without QPS).
+3. **Missing Mechanism Check**: Claims like `zero data loss` or `high availability` must name the *how* (distributed locking, circuit breakers, idempotency keys, saga patterns).
+4. **Scale Quantification Check**: Every systems bullet needs at least one concrete number (QPS, daily events, P99 SLA, % reduction, cost savings).
+5. **Summary Duplication Check**: The first bullet must NOT rephrase the role summary — it should tell a specific technical story.
+
+Present the diagnostic results to the user as a **🔬 Bar-Raiser Analysis** block showing what a Big Tech interviewer would flag, with a concrete fix suggestion for each flagged item.
+
+### Step 2: Draft 2–3 Dimensional Variants (or 6 Domain-Targeted Variants)
 
 Reference `.agents/skills/resume-bullet-drafter/references/writing-style.md`:
 - Each bullet is one complete sentence.
 - Eliminate filler openings ("Responsible for", "Helped with").
 - Put the outcome and metric at the end.
+- Each variant must pass the 5-Point Bar-Raiser Diagnostic before being presented.
 
-**Example Draft Variants:**
+**Standard 3-Variant Draft:**
 - *Variant A (Technical Credibility & Scale)*: "Architected distributed tracing pipeline ingesting 2.5M spans/sec across 60 microservices, reducing MTTR by 42%."
 - *Variant B (Business Impact & Cost Savings / 'Safe Pair of Hands')*: "Cut cloud operating costs by 15% in Q2 2024 by optimizing vendor API contracts and dynamic connection pooling."
 - *Variant C (Leadership Scope & Transferable Skill)*: "Spearheaded high-priority operational issue resolution across 12 markets, reducing delay time by 30%."
+
+**Expanded 6-Variant Draft** (when user asks for broader domain coverage):
+- *Variant A*: Technical Credibility & Scale (generic)
+- *Variant B*: Business Impact & Cost Savings
+- *Variant C*: Leadership Scope
+- *Variant D*: FinTech & Compliance Signals
+- *Variant E*: Cloud Platform & Resilience Signals
+- *Variant F*: AI/ML & Developer Productivity Signals
 
 ### Step 3: Confirm Selection & Inactive Alternates
 Ask the user:

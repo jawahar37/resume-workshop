@@ -21,6 +21,32 @@ Converts unstructured free-text resumes into structured, validated YAML matching
 3. Present the parsed summary for the user to review.
 4. Execute `rw import --yaml <filepath> [--replace]`.
 5. Run `rw status` to verify the import.
+6. **Run Post-Import Bar-Raiser Audit** (see below).
+
+## Post-Import Bar-Raiser Audit
+
+After every import, automatically run each imported bullet through the **5-Point Bar-Raiser Diagnostic** from `resume-bullet-drafter/references/bar-raiser-checklist.md`:
+
+1. **Diagnostic Sweep**: Check every bullet for:
+   - Vague adjectives without backing metrics or mechanisms
+   - Technical misnomers (e.g. "latency reduction" for batch runtime)
+   - Missing mechanism claims ("zero data loss" without naming the how)
+   - Absent scale quantification (no QPS, no P99, no % improvement)
+   - First-bullet / summary duplication
+2. **Audit Summary Report**: Present results as:
+   ```
+   🔬 Bar-Raiser Audit: X of Y bullets flagged
+
+   ✅ Passed: 18 bullets
+   ⚠️  Flagged: 7 bullets
+
+   Flagged Bullets:
+   - gs-reg-apis: Vague Adjective ("resilient", "high-concurrency") + Missing Mechanism ("zero data loss" — how?)
+   - acme-b3: Technical Misnomer ("latency reduction" used for batch runtime)
+   ...
+   ```
+3. **Upgrade Offer**: Ask the user: *"Would you like me to upgrade the 7 flagged bullets to bar-raiser quality before finalizing?"*
+4. If the user accepts, invoke `resume-bullet-drafter` Step 1.5 (Bar-Raiser Diagnostic) on each flagged bullet and present upgraded variants.
 
 ## Schema Reference
 

@@ -16,12 +16,42 @@ Every pitch must embody:
 2. **Senior Power Verbs**: Lead with *"Led," "Spearheaded," "Drove," "Launched," "Owned."*
 3. **Recency Alignment**: Highlight achievements from the **last 2-3 years** as your primary value proposition.
 4. **Balanced Range**: Show technical credibility alongside business impact and leadership.
+5. **Bar-Raiser Quality**: All proof points in pitches must pass the 5-Point Bar-Raiser Diagnostic (see `resume-bullet-drafter/references/bar-raiser-checklist.md`). No vague adjectives, no missing mechanisms, no unquantified claims.
+
+## Company Tier Adaptation
+
+Automatically adapt pitch tone and content based on the target company tier:
+
+### Big Tech (Google, Microsoft, Meta, Amazon, Apple)
+- Lead with **scale metrics**: QPS, daily events, P99 SLAs, 5-nines availability
+- Name **specific architectural mechanisms**, not adjectives (circuit breakers, distributed locking, gRPC, OpenTelemetry)
+- Include the **follow-up defense**: anticipate what the bar-raiser would probe and preemptively address it
+- Frame accomplishments in terms of **systems depth and cross-team impact**
+
+### Growth-Stage / Mid-Market (Stripe, Datadog, Snowflake, Confluent)
+- Lead with **velocity and ownership scope**: "Owned end-to-end from design to production"
+- Emphasize **breadth across the stack** (frontend + backend + infra)
+- Highlight **speed of delivery** and ability to operate with minimal guidance
+- Show **product sense**: tie technical work to user-facing or revenue outcomes
+
+### Startups (Seed through Series B)
+- Lead with **business impact and resourcefulness**: cost savings, revenue, user growth
+- Emphasize **generalist range** and willingness to wear multiple hats
+- Show **speed**: time-to-ship, iteration velocity, MVPs launched
+- Demonstrate **ownership culture fit**: "built from scratch," "sole engineer on..."
+
+### Enterprise & Consulting (Deloitte, Accenture, McKinsey Digital)
+- Lead with **stakeholder management and delivery track record**
+- Emphasize **compliance and governance expertise** (SOC 2, PCI-DSS, HIPAA)
+- Show **cross-functional coordination** across multiple teams, vendors, or markets
+- Highlight **legacy modernization** and migration experience
 
 ## Quick Start
 
 1. Run `rw export --yaml` or `rw status --profile <profile>` to inspect the user's current career accomplishments.
 2. Ask the user for the target company, role, or hiring manager's context.
-3. Generate tailored pitch variants (LinkedIn InMail, Cold Email, 30-Second Elevator Pitch).
+3. Identify the company tier and adapt accordingly.
+4. Generate tailored pitch variants (LinkedIn InMail, Cold Email, 30-Second Elevator Pitch).
 
 ## Workflow
 
@@ -30,7 +60,7 @@ Run:
 ```bash
 rw export --yaml
 ```
-Identify the top 2–3 strongest accomplishments from the last 2-3 years, primary technologies, and leadership proof points.
+Identify the top 2–3 strongest accomplishments from the last 2-3 years, primary technologies, and leadership proof points. Verify these pass the Bar-Raiser Diagnostic before including them in pitches.
 
 ### Step 2: Generate Communication Formats
 
@@ -40,7 +70,7 @@ Identify the top 2–3 strongest accomplishments from the last 2-3 years, primar
 - Clearly state what level and problems you are looking to tackle next.
 
 #### 2. Cold Email to Engineering Hiring Manager
-- Subject line with specific hook (e.g. "Distributed systems engineer / Ex-Nebula Labs infra").
+- Subject line with specific hook (e.g. "Distributed systems engineer / Ex-Goldman Sachs infra").
 - 3 short paragraphs:
   1. Why this specific team/problem interests you (mirroring their JD verbiage).
   2. Proof: 2 concrete bullets directly addressing their stack/scale, demonstrating range (technical + business + leadership).
