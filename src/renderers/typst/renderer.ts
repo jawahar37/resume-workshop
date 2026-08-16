@@ -5,14 +5,14 @@ import { buildProtectedTermsRegex } from "../../config/protected-terms.js";
 export function escapeTypst(text: string | null | undefined): string {
   if (!text) return "";
   return text
-    .replace(/\\/g, "\\\\")
-    .replace(/\[/g, "\\[")
-    .replace(/\]/g, "\\]")
-    .replace(/\$/g, "\\$")
-    .replace(/#/g, "\\#")
-    .replace(/@/g, "\\@")
-    .replace(/_/g, "\\_")
-    .replace(/\*/g, "\\*");
+    .replace(/\\/g, () => "\\\\")
+    .replace(/\[/g, () => "\\[")
+    .replace(/\]/g, () => "\\]")
+    .replace(/\$/g, () => "\\$")
+    .replace(/#/g, () => "\\#")
+    .replace(/@/g, () => "\\@")
+    .replace(/_/g, () => "\\_")
+    .replace(/\*/g, () => "\\*");
 }
 
 function formatDate(dateStr?: string | null): string {
@@ -63,9 +63,7 @@ export function renderTypstSource(resume: FilteredResumeView): string {
     contactParts.push(`#link("${cleanUrl}")[${escapeTypst(p.website)}]`);
   }
 
-  const contactLine = contactParts.join(" #h(2pt) | #h(2pt) ");
-
-  const protectedTermsRegex = buildProtectedTermsRegex();
+  const contactLine = contactParts.join(" | ");
 
   let content = `// Resume Workshop — Typst Opinionated Default Template
 #set page(
@@ -81,10 +79,9 @@ export function renderTypstSource(resume: FilteredResumeView): string {
   lang: "en",
   region: "us",
 )
-#set par(justify: true, leading: 0.52em)
+#set par(justify: true, leading: 0.52em, spacing: 4pt)
 #set block(above: 5pt, below: 4pt)
 #show link: set text(fill: rgb("#1d4ed8"))
-#show regex("${protectedTermsRegex}"): it => text(hyphenate: false)[#it]
 
 // Custom heading styles (System 3: Left Accent Bar)
 #let section-heading(title) = block(
@@ -139,15 +136,9 @@ export function renderTypstSource(resume: FilteredResumeView): string {
       const dateRange = formatDateRange(exp.startDate, exp.endDate);
       content += `
 #block(above: 6pt, below: 4pt)[
-  #grid(
-    columns: (1fr, auto),
-    align: (left, right),
-    row-gutter: 4pt,
-    [*${escapeTypst(exp.company)}*],
-    [#text(size: 8.5pt)[${escapeTypst(dateRange)}]],
-    [#emph[${escapeTypst(exp.roleTitle)}]],
-    [#text(size: 8.5pt)[${escapeTypst(exp.location || "")}]],
-  )
+  *${escapeTypst(exp.company)}* #h(1fr) #text(size: 8.5pt)[${escapeTypst(dateRange)}] \\
+  #v(1.5pt)
+  #emph[${escapeTypst(exp.roleTitle)}] #h(1fr) #text(size: 8.5pt)[${escapeTypst(exp.location || "")}]
 ]
 `;
       if (exp.summary) {
@@ -187,15 +178,9 @@ export function renderTypstSource(resume: FilteredResumeView): string {
       const degreeLine = edu.field ? `${edu.degree}, ${edu.field}` : edu.degree;
       content += `
 #block(above: 5pt, below: 4pt)[
-  #grid(
-    columns: (1fr, auto),
-    align: (left, right),
-    row-gutter: 4pt,
-    [*${escapeTypst(edu.institution)}*],
-    [#text(size: 8.5pt)[${escapeTypst(eduDate)}]],
-    [${escapeTypst(degreeLine)}],
-    [#text(size: 8.5pt)[${escapeTypst(edu.location || "")}]],
-  )
+  *${escapeTypst(edu.institution)}* #h(1fr) #text(size: 8.5pt)[${escapeTypst(eduDate)}] \\
+  #v(1.5pt)
+  ${escapeTypst(degreeLine)} #h(1fr) #text(size: 8.5pt)[${escapeTypst(edu.location || "")}]
 ]
 `;
       if (edu.courses) {

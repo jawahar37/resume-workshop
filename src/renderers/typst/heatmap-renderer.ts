@@ -59,8 +59,7 @@ export function renderTypstSkillHeatmapSource(
   if (p.linkedin) contactParts.push(escapeTypst(p.linkedin));
   if (p.github) contactParts.push(escapeTypst(p.github));
 
-  const contactLine = contactParts.join(" #h(2pt) | #h(2pt) ");
-  const protectedTermsRegex = buildProtectedTermsRegex();
+  const contactLine = contactParts.join(" | ");
 
   const modeTitle = isLLM ? "SKILL HEATMAP (LLM-CLASSIFIED)" : "SKILL DIMENSION LEGEND";
 
@@ -78,10 +77,9 @@ export function renderTypstSkillHeatmapSource(
   lang: "en",
   region: "us",
 )
-#set par(justify: true, leading: 0.52em)
+#set par(justify: true, leading: 0.52em, spacing: 4pt)
 #set block(above: 5pt, below: 4pt)
 #show link: set text(fill: rgb("#1d4ed8"))
-#show regex("${protectedTermsRegex}"): it => text(hyphenate: false)[#it]
 
 // Custom heading styles (System 3: Left Accent Bar)
 #let section-heading(title) = block(
@@ -157,15 +155,9 @@ export function renderTypstSkillHeatmapSource(
       const dateRange = formatDateRange(exp.startDate, exp.endDate);
       content += `
 #block(above: 6pt, below: 4pt)[
-  #grid(
-    columns: (1fr, auto),
-    align: (left, right),
-    row-gutter: 4pt,
-    [*${escapeTypst(exp.company)}*],
-    [#text(size: 8.5pt)[${escapeTypst(dateRange)}]],
-    [#emph[${escapeTypst(exp.roleTitle)}]],
-    [#text(size: 8.5pt)[${escapeTypst(exp.location || "")}]],
-  )
+  *${escapeTypst(exp.company)}* #h(1fr) #text(size: 8.5pt)[${escapeTypst(dateRange)}] \\
+  #v(1.5pt)
+  #emph[${escapeTypst(exp.roleTitle)}] #h(1fr) #text(size: 8.5pt)[${escapeTypst(exp.location || "")}]
 ]
 `;
       if (exp.summary) {
@@ -214,15 +206,9 @@ export function renderTypstSkillHeatmapSource(
       const degreeLine = edu.field ? `${edu.degree}, ${edu.field}` : edu.degree;
       content += `
 #block(above: 5pt, below: 4pt)[
-  #grid(
-    columns: (1fr, auto),
-    align: (left, right),
-    row-gutter: 4pt,
-    [*${escapeTypst(edu.institution)}*],
-    [#text(size: 8.5pt)[${escapeTypst(eduDate)}]],
-    [#emph[${escapeTypst(degreeLine)}]],
-    [#text(size: 8.5pt)[${escapeTypst(edu.location || "")}]],
-  )
+  *${escapeTypst(edu.institution)}* #h(1fr) #text(size: 8.5pt)[${escapeTypst(eduDate)}] \\
+  #v(1.5pt)
+  ${escapeTypst(degreeLine)} #h(1fr) #text(size: 8.5pt)[${escapeTypst(edu.location || "")}]
 ]
 `;
     }
