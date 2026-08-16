@@ -100,8 +100,8 @@ export const PersonalInfoImportSchema = z.object({
 });
 
 export const ResumeYamlSchema = z.object({
-  personalInfo: PersonalInfoImportSchema,
-  experiences: z.array(ExperienceImportSchema).default([]),
+  personalInfo: PersonalInfoImportSchema.optional(),
+  experiences: z.array(ExperienceImportSchema).optional().default([]),
   education: z.array(EducationImportSchema).optional().default([]),
   projects: z.array(ProjectImportSchema).optional().default([]),
   skillGroups: z.array(SkillGroupImportSchema).optional().default([]),

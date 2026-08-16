@@ -62,7 +62,7 @@ export function renderTypstSource(resume: FilteredResumeView): string {
     contactParts.push(`#link("${cleanUrl}")[${escapeTypst(p.website)}]`);
   }
 
-  const contactLine = contactParts.join(" #h(8pt) | #h(8pt) ");
+  const contactLine = contactParts.join(" #h(2pt) | #h(2pt) ");
 
   let content = `// Resume Workshop — Typst Opinionated Default Template
 #set page(
