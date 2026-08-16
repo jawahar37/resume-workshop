@@ -34,6 +34,7 @@ export async function addExperience(options: {
   end?: string;
   location?: string;
   summary?: string;
+  notes?: string;
 }) {
   if (!options.id || !options.company || !options.title || !options.start) {
     console.error(pc.red("Error: --id, --company, --title, and --start are required."));
@@ -50,6 +51,7 @@ export async function addExperience(options: {
       endDate: options.end || "Present",
       location: options.location,
       summary: options.summary,
+      notes: options.notes,
     })
     .onConflictDoUpdate({
       target: schema.experiences.id,
@@ -60,6 +62,7 @@ export async function addExperience(options: {
         endDate: options.end || "Present",
         location: options.location,
         summary: options.summary,
+        notes: options.notes,
       },
     });
 
@@ -74,6 +77,7 @@ export async function updateExperience(options: {
   end?: string;
   location?: string;
   summary?: string;
+  notes?: string;
 }) {
   if (!options.id) {
     console.error(pc.red("Error: --id <experienceId> is required."));
@@ -87,6 +91,7 @@ export async function updateExperience(options: {
   if (options.end) updateSet.endDate = options.end;
   if (options.location) updateSet.location = options.location;
   if (options.summary !== undefined) updateSet.summary = options.summary;
+  if (options.notes !== undefined) updateSet.notes = options.notes;
 
   const { db } = getDatabase();
   await db.update(schema.experiences).set(updateSet).where(eq(schema.experiences.id, options.id));
@@ -113,6 +118,7 @@ export async function showExperience(options: { id: string }) {
   console.log(`${pc.bold("Dates:")} ${exp.startDate} – ${exp.endDate || "Present"}`);
   if (exp.location) console.log(`${pc.bold("Location:")} ${exp.location}`);
   if (exp.summary) console.log(`${pc.bold("Summary:")} ${exp.summary}`);
+  if (exp.notes) console.log(`${pc.bold("Freetext Context Notes:")} ${pc.gray(exp.notes)}`);
 
   const bullets = await db.select().from(schema.bullets).where(eq(schema.bullets.experienceId, options.id));
 

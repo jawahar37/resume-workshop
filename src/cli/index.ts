@@ -55,6 +55,7 @@ program
   .command("status")
   .description("Show summary of master career vault, active bullets per role, and target profiles")
   .option("-p, --profile <profile>", "Show detailed breakdown for a specific profile")
+  .option("-n, --notes <text>", "Set/update freetext context notes for career vault")
   .action(statusCommand);
 
 // 3. validate
@@ -193,6 +194,7 @@ expCmd
   .option("-e, --end <date>", "End date (YYYY-MM or Present)")
   .option("-l, --location <loc>", "Location")
   .option("--summary <text>", "High-level role overview describing operational scope & context")
+  .option("--notes <text>", "Freetext role context notes (PR descriptions, team context, scratchpad)")
   .action(addExperience);
 
 expCmd
@@ -205,6 +207,7 @@ expCmd
   .option("-e, --end <date>", "End date (YYYY-MM or Present)")
   .option("-l, --location <loc>", "Location")
   .option("--summary <text>", "High-level role overview")
+  .option("--notes <text>", "Freetext role context notes (PR descriptions, team context, scratchpad)")
   .action(updateExperience);
 
 expCmd

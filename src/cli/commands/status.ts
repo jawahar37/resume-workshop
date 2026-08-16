@@ -1,9 +1,30 @@
 import Table from "cli-table3";
 import pc from "picocolors";
+import { getDatabase } from "../../db/client.js";
+import * as schema from "../../db/schema.js";
+import { eq } from "drizzle-orm";
 import { loadFullResume } from "../../loader/query.js";
 import { filterResumeForProfile } from "../../loader/filter.js";
 
-export async function statusCommand(options: { profile?: string }) {
+export async function statusCommand(options: { profile?: string; notes?: string }) {
+  const { db } = getDatabase();
+
+  if (options.notes !== undefined) {
+    const [pInfo] = await db.select().from(schema.personalInfo).limit(1);
+    if (pInfo) {
+      await db.update(schema.personalInfo).set({ notes: options.notes }).where(eq(schema.personalInfo.id, pInfo.id));
+    } else {
+      await db.insert(schema.personalInfo).values({
+        id: "primary",
+        name: "Professional",
+        title: "Software Engineer",
+        email: "user@example.com",
+        notes: options.notes,
+      });
+    }
+    console.log(pc.green("✓ Updated Career Vault Freetext Context Notes"));
+  }
+
   const resume = await loadFullResume();
 
   if (options.profile) {
@@ -34,7 +55,11 @@ export async function statusCommand(options: { profile?: string }) {
   // Global vault status
   console.log(pc.bold("\n🗄️  Career Vault Status — Master Overview\n"));
   console.log(`Professional: ${pc.bold(pc.cyan(resume.personalInfo.name))} (${resume.personalInfo.title})`);
-  console.log(`Contact: ${resume.personalInfo.email} | ${resume.personalInfo.location || "Remote"}\n`);
+  console.log(`Contact: ${resume.personalInfo.email} | ${resume.personalInfo.location || "Remote"}`);
+  if (resume.personalInfo.notes) {
+    console.log(`${pc.bold("Freetext Vault Context Notes:")} ${pc.gray(resume.personalInfo.notes)}`);
+  }
+  console.log("");
 
   // Experiences & Bullets Table
   const expTable = new Table({
