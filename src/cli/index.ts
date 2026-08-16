@@ -28,6 +28,7 @@ import {
   setProfileTagWeight,
 } from "./commands/profile.js";
 import { listJds, addJd, addJdRequirement, showJd } from "./commands/jd.js";
+import { listProjects, addProject } from "./commands/project.js";
 
 const program = new Command();
 
@@ -252,5 +253,23 @@ jdCmd
   .description("Show a stored Job Description with parsed requirements")
   .requiredOption("-i, --id <id>", "JD ID")
   .action(showJd);
+
+// 15. project subcommands
+const projCmd = program.command("project").description("Manage academic & side projects");
+
+projCmd
+  .command("list")
+  .description("List all academic/side projects")
+  .action(listProjects);
+
+projCmd
+  .command("add")
+  .description("Add an academic or side project")
+  .requiredOption("-t, --title <title>", "Project title")
+  .requiredOption("-d, --description <desc>", "Project description")
+  .option("-i, --id <id>", "Custom project ID")
+  .option("--tech <technologies>", "Technologies used")
+  .option("-u, --url <url>", "Project link / URL")
+  .action(addProject);
 
 program.parse(process.argv);
