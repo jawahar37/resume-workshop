@@ -1,4 +1,5 @@
 import type { FilteredResumeView } from "../../loader/filter.js";
+import { buildProtectedTermsRegex } from "../../config/protected-terms.js";
 
 // Escape special Typst characters
 function escapeTypst(text: string | null | undefined): string {
@@ -64,6 +65,8 @@ export function renderTypstSource(resume: FilteredResumeView): string {
 
   const contactLine = contactParts.join(" #h(2pt) | #h(2pt) ");
 
+  const protectedTermsRegex = buildProtectedTermsRegex();
+
   let content = `// Resume Workshop — Typst Opinionated Default Template
 #set page(
   paper: "us-letter",
@@ -73,16 +76,23 @@ export function renderTypstSource(resume: FilteredResumeView): string {
   font: ("Calibri", "Helvetica", "Arial", "Liberation Sans", "DejaVu Sans"),
   size: 9.5pt,
   fill: rgb("#1a1a1a"),
-  spacing: 120%,
+  spacing: 115%,
+  hyphenate: true,
+  lang: "en",
+  region: "us",
 )
-#set par(justify: false, leading: 0.52em)
+#set par(justify: true, leading: 0.52em)
 #set block(above: 5pt, below: 4pt)
 #show link: set text(fill: rgb("#1d4ed8"))
+#show regex("${protectedTermsRegex}"): it => text(hyphenate: false)[#it]
 
-// Custom heading styles
-#let section-heading(title) = block(above: 10pt, below: 3pt)[
-  #text(size: 10.5pt, weight: "bold", fill: rgb("#0f172a"), tracking: 0.08em)[#upper(title)]
-]
+// Custom heading styles (System 3: Left Accent Bar)
+#let section-heading(title) = block(
+  stroke: (left: 2.5pt + rgb("#1d4ed8")),
+  inset: (left: 7pt),
+  above: 11pt,
+  below: 4pt,
+)[#text(size: 10.5pt, weight: "bold", fill: rgb("#0f172a"), tracking: 0.08em)[#upper(title)]]
 
 // Header
 #align(center)[
@@ -131,6 +141,7 @@ export function renderTypstSource(resume: FilteredResumeView): string {
 #block(above: 6pt, below: 3pt)[
   #grid(
     columns: (1fr, auto),
+    align: (left, right),
     row-gutter: 4pt,
     [*${escapeTypst(exp.company)}*],
     [#text(size: 8.5pt)[${escapeTypst(dateRange)}]],
@@ -178,6 +189,7 @@ export function renderTypstSource(resume: FilteredResumeView): string {
 #block(above: 5pt, below: 3pt)[
   #grid(
     columns: (1fr, auto),
+    align: (left, right),
     row-gutter: 4pt,
     [*${escapeTypst(edu.institution)}*],
     [#text(size: 8.5pt)[${escapeTypst(eduDate)}]],
