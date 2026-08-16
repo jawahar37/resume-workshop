@@ -9,6 +9,12 @@ description: |
 
 Internalizes Job Descriptions as the "question" that the resume is designed to answer. Operates in two complementary modes: Ingest (JD → Vault) and Gap Analysis (Vault vs. JD).
 
+## Core Positioning Strategy
+
+When analyzing JDs and recommending edits:
+1. **Translate Transferable Skills**: Scan JD requirements and mirror their exact verbiage to translate past experience into terms the target recruiter recognizes.
+2. **Position as a 'Safe Pair of Hands'**: Recommend accomplishments that demonstrate low-risk, dependable execution and proven recent results for their specific priorities.
+
 ## Mode 1: Ingest & Store a Job Description
 
 When the user pastes a JD:
@@ -40,7 +46,7 @@ When the user pastes a JD:
    - **Skill Gaps**: Which requirements have 0 matching bullets in the vault?
 3. Present actionable recommendations to the user:
    - Bullet activations/deactivations for target profile.
-   - Suggested new accomplishment bullets to draft using `resume-bullet-drafter`.
+   - Suggested new accomplishment bullets to draft using `resume-bullet-drafter` (mirroring JD verbiage and leading with senior power verbs).
    - Recommended tag weight adjustments:
      ```bash
      rw profile set-tag-weight --profile <profile-id> --tag "<Tag>" --weight high
