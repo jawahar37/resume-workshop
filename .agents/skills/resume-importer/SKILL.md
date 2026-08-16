@@ -40,6 +40,7 @@ experiences:
     startDate: "2021-04"
     endDate: "Present"
     location: "Seattle, WA"
+    summary: "Led core infrastructure team of 8 engineers building distributed caching and event streaming platforms."
     bullets:
       - id: "acme-b1"
         content: "Scaled Redis caching layer to handle 100k QPS with 99.99% uptime."

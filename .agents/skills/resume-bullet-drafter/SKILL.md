@@ -56,6 +56,11 @@ rw bullet add --experience <exp-id> --content "<alternate-text>" --inactive --ta
 rw bullet update --id <bullet-id> --content "<revised-text>"
 ```
 
+**Setting a high-level role summary:**
+```bash
+rw experience add -i <exp-id> -c "<Company>" -t "<Title>" -s "<YYYY-MM>" --summary "<High-level operational overview>"
+```
+
 **Verify changes:**
 ```bash
 rw status
