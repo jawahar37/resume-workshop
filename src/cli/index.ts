@@ -17,6 +17,7 @@ import {
   updateBullet,
   activateBullet,
   deactivateBullet,
+  deleteBullet,
   tagBullet,
 } from "./commands/bullet.js";
 import { listExperiences, addExperience } from "./commands/experience.js";
@@ -150,6 +151,12 @@ bulletCmd
   .requiredOption("-i, --id <id>", "Bullet ID")
   .option("-p, --profile <profile>", "Profile ID to deactivate for")
   .action(deactivateBullet);
+
+bulletCmd
+  .command("delete")
+  .description("Permanently delete a bullet from the vault")
+  .requiredOption("-i, --id <id>", "Bullet ID")
+  .action(deleteBullet);
 
 bulletCmd
   .command("tag")

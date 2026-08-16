@@ -170,3 +170,14 @@ export async function tagBullet(options: { id: string; tags: string }) {
 
   console.log(pc.green(`✓ Tagged bullet [${options.id}] with: ${tagsList.join(", ")}`));
 }
+
+export async function deleteBullet(options: { id: string }) {
+  if (!options.id) {
+    console.error(pc.red("Error: --id <bulletId> is required."));
+    process.exit(1);
+  }
+
+  const { db } = getDatabase();
+  await db.delete(schema.bullets).where(eq(schema.bullets.id, options.id));
+  console.log(pc.red(`✓ Permanently deleted bullet [${options.id}] from vault`));
+}
