@@ -20,7 +20,7 @@ import {
   deleteBullet,
   tagBullet,
 } from "./commands/bullet.js";
-import { listExperiences, addExperience } from "./commands/experience.js";
+import { listExperiences, addExperience, updateExperience, showExperience } from "./commands/experience.js";
 import {
   listProfiles,
   createProfile,
@@ -29,6 +29,12 @@ import {
 } from "./commands/profile.js";
 import { listJds, addJd, addJdRequirement, showJd } from "./commands/jd.js";
 import { listProjects, addProject } from "./commands/project.js";
+import {
+  showSummary,
+  updateSummary,
+  addSummaryLine,
+  removeSummaryLine,
+} from "./commands/summary.js";
 
 const program = new Command();
 
@@ -186,6 +192,24 @@ expCmd
   .option("--summary <text>", "High-level role overview describing operational scope & context")
   .action(addExperience);
 
+expCmd
+  .command("update")
+  .description("Update an existing work experience")
+  .requiredOption("-i, --id <id>", "Experience ID")
+  .option("-c, --company <name>", "Company name")
+  .option("-t, --title <title>", "Role title")
+  .option("-s, --start <date>", "Start date (YYYY-MM)")
+  .option("-e, --end <date>", "End date (YYYY-MM or Present)")
+  .option("-l, --location <loc>", "Location")
+  .option("--summary <text>", "High-level role overview")
+  .action(updateExperience);
+
+expCmd
+  .command("show")
+  .description("Show experience details, summary, and linked bullet points with word counts")
+  .requiredOption("-i, --id <id>", "Experience ID")
+  .action(showExperience);
+
 // 13. profile subcommands
 const profCmd = program.command("profile").description("Manage target resume profiles");
 
@@ -271,5 +295,32 @@ projCmd
   .option("--tech <technologies>", "Technologies used")
   .option("-u, --url <url>", "Project link / URL")
   .action(addProject);
+
+// 16. summary subcommands
+const summaryCmd = program.command("summary").description("Manage Candidate Profile & Professional Summary bullets");
+
+summaryCmd
+  .command("show")
+  .description("Show professional summary lines with word and character counts")
+  .action(showSummary);
+
+summaryCmd
+  .command("update")
+  .description("Update the complete professional summary text")
+  .option("-t, --text <text>", "Full multiline summary text")
+  .option("-f, --file <path>", "File path containing summary text")
+  .action(updateSummary);
+
+summaryCmd
+  .command("add-line")
+  .description("Append a new bullet line to the professional summary")
+  .requiredOption("-l, --line <text>", "New summary bullet text")
+  .action(addSummaryLine);
+
+summaryCmd
+  .command("remove-line")
+  .description("Remove a summary bullet line by index (1-indexed)")
+  .requiredOption("-i, --index <n>", "Line number to remove (1-indexed)")
+  .action(removeSummaryLine);
 
 program.parse(process.argv);
