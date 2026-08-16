@@ -19,20 +19,20 @@ export function renderTypstSource(resume: FilteredResumeView): string {
   
   // Format contact items
   const contactParts: string[] = [];
-  if (p.email) contactParts.push(`link("mailto:${p.email}")[${escapeTypst(p.email)}]`);
-  if (p.phone) contactParts.push(`[${escapeTypst(p.phone)}]`);
-  if (p.location) contactParts.push(`[${escapeTypst(p.location)}]`);
+  if (p.email) contactParts.push(`#link("mailto:${p.email}")[${escapeTypst(p.email)}]`);
+  if (p.phone) contactParts.push(escapeTypst(p.phone));
+  if (p.location) contactParts.push(escapeTypst(p.location));
   if (p.linkedin) {
     const cleanUrl = p.linkedin.startsWith("http") ? p.linkedin : `https://${p.linkedin}`;
-    contactParts.push(`link("${cleanUrl}")[${escapeTypst(p.linkedin)}]`);
+    contactParts.push(`#link("${cleanUrl}")[${escapeTypst(p.linkedin)}]`);
   }
   if (p.github) {
     const cleanUrl = p.github.startsWith("http") ? p.github : `https://${p.github}`;
-    contactParts.push(`link("${cleanUrl}")[${escapeTypst(p.github)}]`);
+    contactParts.push(`#link("${cleanUrl}")[${escapeTypst(p.github)}]`);
   }
   if (p.website) {
     const cleanUrl = p.website.startsWith("http") ? p.website : `https://${p.website}`;
-    contactParts.push(`link("${cleanUrl}")[${escapeTypst(p.website)}]`);
+    contactParts.push(`#link("${cleanUrl}")[${escapeTypst(p.website)}]`);
   }
 
   const contactLine = contactParts.join(" #h(8pt) | #h(8pt) ");
