@@ -1,0 +1,14 @@
+# Dependencies
+node_modules/
+
+# Build Outputs
+dist/
+
+# Local Vault & Database
+.data/
+
+# Logs
+*.log
+
+# OS Files
+.DS_Store

@@ -1,0 +1,52 @@
+{
+  "name": "resume-workshop",
+  "version": "0.1.0",
+  "description": "Career vault and resume renderer using Typst, SQLite, and Don Norman design principles",
+  "type": "module",
+  "main": "dist/cli/index.js",
+  "bin": {
+    "resume-workshop": "./dist/cli/index.js",
+    "rw": "./dist/cli/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/cli/index.ts",
+    "rw": "tsx src/cli/index.ts",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "tsx src/db/migrate.ts",
+    "db:seed": "tsx src/db/seed.ts",
+    "test": "tsx --test test/**/*.test.ts"
+  },
+  "keywords": [
+    "resume",
+    "typst",
+    "cv",
+    "career",
+    "drizzle",
+    "sqlite"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jawahar37/resume-workshop.git"
+  },
+  "dependencies": {
+    "@libsql/client": "^0.14.0",
+    "better-sqlite3": "^11.8.1",
+    "cli-table3": "^0.6.5",
+    "commander": "^13.1.0",
+    "drizzle-orm": "^0.39.3",
+    "drizzle-zod": "^0.7.0",
+    "picocolors": "^1.1.1",
+    "yaml": "^2.7.0",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.12",
+    "@types/node": "^22.13.4",
+    "drizzle-kit": "^0.30.4",
+    "tsx": "^4.19.3",
+    "typescript": "^5.7.3"
+  }
+}

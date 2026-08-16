@@ -1,0 +1,203 @@
+# Resume Workshop — Master Career Vault (Seed Data)
+# All accomplishments, roles, alternate points, tags, and target profiles
+
+personalInfo:
+  name: "Alex Mercer"
+  title: "Staff Software Engineer | Distributed Systems & Platform Infrastructure"
+  email: "alex.mercer@example.com"
+  phone: "+1 (555) 234-5678"
+  location: "San Francisco, CA (Open to Remote)"
+  website: "https://alexmercer.dev"
+  github: "github.com/alexmercer"
+  linkedin: "linkedin.com/in/alex-mercer"
+  summary: "Staff Engineer with 10+ years designing high-throughput distributed systems, real-time data pipelines, and developer platforms. Proven track record leading multi-team technical architecture and mentoring senior engineers."
+
+experiences:
+  - id: "nebula-staff"
+    company: "Nebula Labs"
+    roleTitle: "Staff Software Engineer"
+    startDate: "2023-01"
+    endDate: "Present"
+    location: "San Francisco, CA"
+    orderIndex: 1
+    bullets:
+      - id: "nebula-tracing"
+        content: "Architected distributed tracing pipeline ingesting 2.5M spans/sec across 60 microservices, reducing MTTR by 42%."
+        isActive: true
+        priority: 1
+        tags: ["Distributed Systems", "Observability", "Go", "Kafka"]
+        notes: "Primary technical achievement for platform reliability. Span loss dropped to <0.001%."
+      - id: "nebula-tracing-alt"
+        content: "Built unified telemetry platform combining logs, traces, and metrics into a single query engine used by 120+ engineers daily."
+        isActive: false
+        priority: 3
+        tags: ["Observability", "Platform", "Developer Experience"]
+        notes: "Alternate bullet highlighting developer experience rather than raw ingestion scale."
+      - id: "nebula-k8s-cost"
+        content: "Engineered dynamic autoscaling and bin-packing system for 400+ node EKS clusters, saving $380k annually in compute costs."
+        isActive: true
+        priority: 2
+        tags: ["Kubernetes", "Cloud Infrastructure", "Cost Optimization", "AWS"]
+      - id: "nebula-mentorship"
+        content: "Mentored 4 senior engineers through staff-level promotion criteria; established company-wide RFC architecture review process."
+        isActive: true
+        priority: 3
+        tags: ["Leadership", "Mentorship", "Architecture"]
+      - id: "nebula-mentorship-alt"
+        content: "Led weekly architecture forums and authored technical standards adopted across 5 product engineering pods."
+        isActive: false
+        priority: 4
+        tags: ["Leadership", "Governance"]
+
+  - id: "acme-senior"
+    company: "Acme Cloud Systems"
+    roleTitle: "Senior Distributed Systems Engineer"
+    startDate: "2020-03"
+    endDate: "2022-12"
+    location: "New York, NY"
+    orderIndex: 2
+    bullets:
+      - id: "acme-cache-engine"
+        content: "Designed low-latency distributed caching layer in Go, reducing p99 API latency from 180ms to 24ms for 15M daily active users."
+        isActive: true
+        priority: 1
+        tags: ["Distributed Systems", "Performance", "Go", "Redis"]
+      - id: "acme-raft-consensus"
+        content: "Implemented Raft consensus module for multi-region metadata replication, achieving 99.999% availability during cloud zone outages."
+        isActive: true
+        priority: 2
+        tags: ["Distributed Systems", "Consensus", "Reliability", "Go"]
+      - id: "acme-migration"
+        content: "Executed zero-downtime migration of 12TB primary transaction database to partitioned PostgreSQL with automated failover."
+        isActive: true
+        priority: 3
+        tags: ["Database", "PostgreSQL", "Data Migration"]
+      - id: "acme-hiring"
+        content: "Conducted 80+ technical interviews for backend and platform engineering, increasing offer acceptance rate to 84%."
+        isActive: false
+        priority: 4
+        tags: ["Hiring", "Leadership"]
+
+  - id: "hyper-swe"
+    company: "HyperScale Media"
+    roleTitle: "Software Engineer"
+    startDate: "2017-06"
+    endDate: "2020-02"
+    location: "Boston, MA"
+    orderIndex: 3
+    bullets:
+      - id: "hyper-stream-pipeline"
+        content: "Built real-time video analytics pipeline in Rust and Apache Flink processing 450k events/sec with sub-second SLA."
+        isActive: true
+        priority: 1
+        tags: ["Rust", "Stream Processing", "Distributed Systems"]
+      - id: "hyper-grpc-apis"
+        content: "Migrated legacy REST services to gRPC with Protocol Buffers, cutting network payload size by 65% across internal RPCs."
+        isActive: true
+        priority: 2
+        tags: ["gRPC", "API Design", "Performance"]
+
+education:
+  - id: "mit-cs"
+    institution: "Massachusetts Institute of Technology"
+    degree: "B.S. in Computer Science and Engineering"
+    startDate: "2013"
+    endDate: "2017"
+    location: "Cambridge, MA"
+    orderIndex: 1
+
+skillGroups:
+  - id: "skills-languages"
+    category: "Languages & Runtimes"
+    items: "Go, Rust, TypeScript, Python, C++, SQL"
+    orderIndex: 1
+  - id: "skills-infra"
+    category: "Infrastructure & Cloud"
+    items: "Kubernetes, AWS, GCP, Docker, Terraform, Kafka, Envoy"
+    orderIndex: 2
+  - id: "skills-systems"
+    category: "Systems & Architecture"
+    items: "Distributed Consensus (Raft), Event-Driven Architecture, Microservices, Observability (OpenTelemetry), High-Throughput Storage"
+    orderIndex: 3
+
+targetProfiles:
+  - id: "staff-eng"
+    name: "Staff Software Engineer"
+    targetRole: "Staff Software Engineer | Principal Engineer"
+    maxPages: 1
+    summary: "Staff Software Engineer specializing in distributed systems, real-time infrastructure, and cloud scale platforms. Proven technical leader driving architectural vision and mentoring engineering teams."
+    tagWeights:
+      "Distributed Systems": "high"
+      "Kubernetes": "high"
+      "Go": "high"
+      "Observability": "high"
+      "Leadership": "medium"
+    selectedBulletIds:
+      - "nebula-tracing"
+      - "nebula-k8s-cost"
+      - "nebula-mentorship"
+      - "acme-cache-engine"
+      - "acme-raft-consensus"
+      - "hyper-stream-pipeline"
+      - "hyper-grpc-apis"
+
+  - id: "engineering-manager"
+    name: "Engineering Manager"
+    targetRole: "Engineering Manager | Platform Lead"
+    maxPages: 2
+    summary: "Engineering leader with deep technical roots in distributed infrastructure. Experienced in scaling engineering teams, establishing RFC standards, reducing cloud spend, and coaching engineers to staff level."
+    tagWeights:
+      "Leadership": "high"
+      "Mentorship": "high"
+      "Cost Optimization": "high"
+      "Architecture": "high"
+    selectedBulletIds:
+      - "nebula-mentorship"
+      - "nebula-mentorship-alt"
+      - "nebula-k8s-cost"
+      - "nebula-tracing"
+      - "acme-hiring"
+      - "acme-migration"
+      - "acme-cache-engine"
+      - "hyper-grpc-apis"
+
+jobDescriptions:
+  - id: "google-staff-infra"
+    company: "Google"
+    roleTitle: "Staff Software Engineer, Cloud & Distributed Infrastructure"
+    rawText: |
+      About the job:
+      As a Staff Software Engineer on Google Cloud Infrastructure, you will lead technical architecture for large-scale distributed systems powering next-generation cloud services.
+
+      Responsibilities:
+      - Design and build planet-scale distributed storage and compute infrastructure.
+      - Drive cross-functional technical strategy across multiple platform teams.
+      - Optimize service latency, availability, and cost efficiency across distributed clusters.
+      - Mentor and grow senior and staff-level engineers.
+
+      Minimum qualifications:
+      - Bachelor's degree in Computer Science or equivalent practical experience.
+      - 8+ years of experience with distributed systems design in Go, C++, or Rust.
+      - Experience with container orchestration (Kubernetes), consensus protocols, or high-throughput messaging (Kafka).
+    url: "https://careers.google.com/jobs/results/staff-swe-infra"
+    requirements:
+      - id: "req-dist-systems"
+        text: "Design and build planet-scale distributed storage and compute infrastructure"
+        weight: "high"
+        tags: ["Distributed Systems", "Architecture", "Performance"]
+        orderIndex: 1
+      - id: "req-languages"
+        text: "8+ years of experience with distributed systems design in Go, C++, or Rust"
+        weight: "high"
+        tags: ["Go", "Rust", "C++"]
+        orderIndex: 2
+      - id: "req-k8s"
+        text: "Experience with container orchestration (Kubernetes), consensus protocols, or high-throughput messaging"
+        weight: "high"
+        tags: ["Kubernetes", "Consensus", "Kafka"]
+        orderIndex: 3
+      - id: "req-leadership"
+        text: "Drive cross-functional technical strategy and mentor senior/staff engineers"
+        weight: "medium"
+        tags: ["Leadership", "Mentorship"]
+        orderIndex: 4

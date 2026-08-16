@@ -1,0 +1,117 @@
+import type { LoadedResume, LoadedExperience, LoadedBullet } from "./query.js";
+
+export interface FilteredResumeView {
+  profileId: string | null;
+  profileName: string;
+  maxPages: number;
+  personalInfo: LoadedResume["personalInfo"];
+  experiences: Array<{
+    id: string;
+    company: string;
+    roleTitle: string;
+    startDate: string;
+    endDate: string | null;
+    location: string | null;
+    bullets: LoadedBullet[];
+  }>;
+  education: LoadedResume["education"];
+  skillGroups: LoadedResume["skillGroups"];
+  stats: {
+    totalMasterBullets: number;
+    selectedBulletsCount: number;
+    estimatedPageCount: number;
+    maxPages: number;
+    isOverLimit: boolean;
+  };
+}
+
+export function filterResumeForProfile(
+  resume: LoadedResume,
+  profileId?: string
+): FilteredResumeView {
+  const profile = profileId
+    ? resume.targetProfiles.find((p) => p.id === profileId)
+    : resume.targetProfiles[0];
+
+  const totalMasterBullets = resume.experiences.reduce(
+    (sum, e) => sum + e.bullets.length,
+    0
+  );
+
+  let selectedBulletIds = new Set<string>();
+  if (profile && profile.selectedBulletIds && profile.selectedBulletIds.length > 0) {
+    selectedBulletIds = new Set(profile.selectedBulletIds);
+  }
+
+  const tagWeights = profile?.tagWeights || {};
+
+  const filteredExperiences = resume.experiences
+    .map((exp) => {
+      let bulletsToInclude: LoadedBullet[] = [];
+
+      if (selectedBulletIds.size > 0) {
+        // Explicit profile selection
+        bulletsToInclude = exp.bullets.filter((b) => selectedBulletIds.has(b.id));
+      } else {
+        // Fallback: take active bullets, ranked by tag match and priority
+        bulletsToInclude = exp.bullets
+          .filter((b) => b.isActive)
+          .sort((a, b) => {
+            // Tag score
+            const aTagScore = a.tags.reduce((s, t) => s + (tagWeights[t] === "high" ? 3 : tagWeights[t] === "medium" ? 2 : 1), 0);
+            const bTagScore = b.tags.reduce((s, t) => s + (tagWeights[t] === "high" ? 3 : tagWeights[t] === "medium" ? 2 : 1), 0);
+            if (aTagScore !== bTagScore) return bTagScore - aTagScore;
+            return a.priority - b.priority;
+          });
+      }
+
+      return {
+        id: exp.id,
+        company: exp.company,
+        roleTitle: exp.roleTitle,
+        startDate: exp.startDate,
+        endDate: exp.endDate,
+        location: exp.location,
+        bullets: bulletsToInclude,
+      };
+    })
+    .filter((exp) => exp.bullets.length > 0);
+
+  const selectedBulletsCount = filteredExperiences.reduce(
+    (sum, e) => sum + e.bullets.length,
+    0
+  );
+
+  // Estimate page count:
+  // Header: ~6 lines, Skills: ~4 lines, Education: ~4 lines, Experiences: ~4 lines per role + ~2 lines per bullet
+  const totalEstimatedLines =
+    6 +
+    (resume.skillGroups.length > 0 ? 4 : 0) +
+    (resume.education.length > 0 ? 4 : 0) +
+    filteredExperiences.length * 3 +
+    selectedBulletsCount * 2;
+
+  const maxPages = profile?.maxPages ?? 1;
+  const estimatedPages = Math.max(1, Math.round((totalEstimatedLines / 38) * 10) / 10);
+  const isOverLimit = estimatedPages > maxPages;
+
+  return {
+    profileId: profile?.id ?? null,
+    profileName: profile?.name ?? "Master Resume",
+    maxPages,
+    personalInfo: {
+      ...resume.personalInfo,
+      summary: profile?.summary || resume.personalInfo.summary,
+    },
+    experiences: filteredExperiences,
+    education: resume.education,
+    skillGroups: resume.skillGroups,
+    stats: {
+      totalMasterBullets,
+      selectedBulletsCount,
+      estimatedPageCount: estimatedPages,
+      maxPages,
+      isOverLimit,
+    },
+  };
+}
