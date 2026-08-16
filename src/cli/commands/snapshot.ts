@@ -11,7 +11,7 @@ export async function snapshotCommand(options: { profile?: string; name: string 
     process.exit(1);
   }
 
-  const profileId = options.profile || "staff-eng";
+  const profileId = options.profile || "full-stack-software-engineer";
   const dateStr = new Date().toISOString().split("T")[0];
   const cleanName = options.name.toLowerCase().replace(/[^a-z0-9-_]+/g, "-");
   const artifactFileName = `${cleanName}-${dateStr}`;

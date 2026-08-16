@@ -32,16 +32,16 @@ test("Resume Workshop End-to-End Test Suite", async (t) => {
     assert.equal(resume.experiences.length, 3);
     assert.ok(resume.targetProfiles.length >= 2);
 
-    const staffProfile = resume.targetProfiles.find((p) => p.id === "staff-eng");
-    assert.ok(staffProfile, "Expected staff-eng profile");
+    const staffProfile = resume.targetProfiles.find((p) => p.id === "full-stack-software-engineer");
+    assert.ok(staffProfile, "Expected full-stack-software-engineer profile");
     assert.equal(staffProfile?.maxPages, 1);
   });
 
   await t.test("3. Profile Filtering & Page Estimation", async () => {
     const resume = await loadFullResume(testDbPath);
-    const view = filterResumeForProfile(resume, "staff-eng");
+    const view = filterResumeForProfile(resume, "full-stack-software-engineer");
 
-    assert.equal(view.profileId, "staff-eng");
+    assert.equal(view.profileId, "full-stack-software-engineer");
     assert.equal(view.maxPages, 1);
     assert.ok(view.stats.selectedBulletsCount > 0);
     assert.equal(view.stats.isOverLimit, false);
@@ -49,7 +49,7 @@ test("Resume Workshop End-to-End Test Suite", async (t) => {
 
   await t.test("4. Typst & Markdown Renderers", async () => {
     const resume = await loadFullResume(testDbPath);
-    const view = filterResumeForProfile(resume, "staff-eng");
+    const view = filterResumeForProfile(resume, "full-stack-software-engineer");
 
     const typst = renderTypstSource(view);
     assert.ok(typst.includes("#section-heading(\"Work Experience\")"));

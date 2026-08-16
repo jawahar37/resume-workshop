@@ -121,9 +121,9 @@ skillGroups:
     orderIndex: 3
 
 targetProfiles:
-  - id: "staff-eng"
-    name: "Staff Software Engineer"
-    targetRole: "Staff Software Engineer | Principal Engineer"
+  - id: "full-stack-software-engineer"
+    name: "Full Stack Software Engineer"
+    targetRole: "Full Stack & Cloud Engineer"
     maxPages: 1
     summary: "Staff Software Engineer specializing in distributed systems, real-time infrastructure, and cloud scale platforms. Proven technical leader driving architectural vision and mentoring engineering teams."
     tagWeights:

@@ -1,8 +1,8 @@
 # PDF Aliases & Target Profiles Configuration
 aliases:
   resume-latest:
-    profile: staff-eng
-    description: "Always-current Staff Engineer resume (1 page)"
+    profile: full-stack-software-engineer
+    description: "Always-current Full Stack Software Engineer resume (1 page)"
   resume-em:
     profile: engineering-manager
     description: "Always-current Engineering Manager resume (2 pages)"

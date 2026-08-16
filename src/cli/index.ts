@@ -91,15 +91,18 @@ program
   .command("snapshot")
   .description("Create a named, timestamped artifact snapshot in dist/artifacts/")
   .requiredOption("-n, --name <name>", "Snapshot name (e.g. google-staff-infra)")
-  .option("-p, --profile <profile>", "Target profile to render (default: staff-eng)")
+  .option("-p, --profile <profile>", "Target profile to render (default: full-stack-software-engineer)")
   .action(snapshotCommand);
 
 // 8. preview
 program
   .command("preview")
-  .description("Compile single-profile preview PDF in dist/preview/")
-  .option("-p, --profile <profile>", "Target profile to preview (default: staff-eng)")
+  .description("Compile multi-view profile preview PDFs in dist/preview/<profile-id>/")
+  .option("-p, --profile <profile>", "Target profile to preview (default: full-stack-software-engineer)")
+  .option("-v, --view <view>", "Specific view to target/open (resume, heatmap, full-vault)")
   .option("-o, --open", "Open PDF in OS system default viewer")
+  .option("-m, --heatmap", "Target skill heatmap view")
+  .option("--full-vault", "Target full vault view (shaded inactive points)")
   .action(previewCommand);
 
 // 9. diff
