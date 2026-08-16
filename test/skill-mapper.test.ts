@@ -49,14 +49,14 @@ test("Skill Mapper - Sentence-level splitting and categorization", async (t) => 
       profileName: "Full Stack Software Engineer",
       targetRole: "Senior Software Engineer",
       personalInfo: {
-        name: "Jawahar Pinnelli",
+        name: "Alex Mercer",
         title: "Software Developer",
-        email: "jawahar@example.com",
+        email: "alex.mercer@example.com",
       },
       experiences: [
         {
           id: "exp-1",
-          company: "Goldman Sachs",
+          company: "Acme Corp",
           roleTitle: "Software Engineer",
           startDate: "2024-01",
           endDate: "Present",
