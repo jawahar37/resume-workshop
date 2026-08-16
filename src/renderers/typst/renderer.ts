@@ -92,7 +92,7 @@ export function renderTypstSource(resume: FilteredResumeView): string {
   inset: (left: 7pt),
   above: 11pt,
   below: 4pt,
-)[#text(size: 10.5pt, weight: "bold", fill: rgb("#0f172a"), tracking: 0.08em)[#upper(title)]]
+)[#text(size: 10.5pt, weight: "bold", fill: rgb("#0f172a"))[#upper(title)]]
 
 // Header
 #align(center)[
