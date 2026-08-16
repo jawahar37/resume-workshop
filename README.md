@@ -15,6 +15,16 @@
 
 ---
 
+## 🤖 Agent Skills (`.agents/skills/`)
+
+Resume Workshop includes four instruction-only AI agent skills:
+
+1. **`resume-bullet-drafter`**: Transforms raw work notes into quantified STAR bullets following the Verlyn Klinkenborg writing style (`references/writing-style.md`).
+2. **`jd-match-analyzer`**: Ingests JDs, extracts requirements into tags and weights, and performs gap analysis against the vault.
+3. **`recruiter-pitch-generator`**: Generates 30-second LinkedIn elevator pitches and cold outreach emails directly synthesized from active accomplishments.
+4. **`resume-importer`**: Parses unstructured text/markdown resumes into validated YAML and executes `rw import`.
+
+---
 ## 🚀 Quick Start
 
 ### 1. Installation
@@ -186,16 +196,6 @@ rw build
 
 ---
 
-## 🤖 Agent Skills (`.agents/skills/`)
-
-Resume Workshop includes four instruction-only AI agent skills:
-
-1. **`resume-bullet-drafter`**: Transforms raw work notes into quantified STAR bullets following the Verlyn Klinkenborg writing style (`references/writing-style.md`).
-2. **`jd-match-analyzer`**: Ingests JDs, extracts requirements into tags and weights, and performs gap analysis against the vault.
-3. **`recruiter-pitch-generator`**: Generates 30-second LinkedIn elevator pitches and cold outreach emails directly synthesized from active accomplishments.
-4. **`resume-importer`**: Parses unstructured text/markdown resumes into validated YAML and executes `rw import`.
-
----
 
 ## 📁 Directory Structure
 
