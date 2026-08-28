@@ -41,12 +41,12 @@ export async function initCommand(options: { force?: boolean }) {
 
   console.log(
     pc.green(
-      `✓ Initialized career vault with ${res.expCount} experiences, ${res.bulletCount} bullets, and ${res.tagCount} tags.`
+      `✓ Initialized master career record with ${res.expCount} experiences, ${res.bulletCount} bullets, and ${res.tagCount} tags.`
     )
   );
   console.log(pc.cyan(`✓ Canonical YAML snapshot saved to data/resume.yaml`));
   console.log(pc.bold("\nNext steps (Knowledge in the World):"));
-  console.log(`  ${pc.magenta("rw status")}                 Show current vault breakdown & active profiles`);
+  console.log(`  ${pc.magenta("rw status")}                 Show current master record breakdown & active profiles`);
   console.log(`  ${pc.magenta("rw build")}                  Compile all PDF & Markdown aliases`);
   console.log(`  ${pc.magenta("rw preview --profile staff-eng")} Compile & open resume PDF`);
   console.log(`  ${pc.magenta("rw --help")}                 View all available commands\n`);

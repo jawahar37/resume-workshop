@@ -13,7 +13,7 @@ export async function exportCommand(options: { yaml?: boolean; output?: string }
       fs.mkdirSync(outDir, { recursive: true });
     }
     fs.writeFileSync(outPath, yamlContent, "utf8");
-    console.log(pc.green(`✓ Exported vault snapshot to ${pc.cyan(options.output)}`));
+    console.log(pc.green(`✓ Exported master snapshot to ${pc.cyan(options.output)}`));
   } else {
     // Write to stdout
     process.stdout.write(yamlContent);

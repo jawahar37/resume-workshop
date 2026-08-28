@@ -77,4 +77,4 @@ This style reference governs how accomplishment bullets, executive summaries, an
      - **Variant A**: Systems depth & performance metrics (Technical Credibility)
      - **Variant B**: Business impact & cost reduction ('Safe Pair of Hands' / Dependability)
      - **Variant C**: Team leadership & cross-functional scope (Seniority / Leadership)
-   - The user selects the active bullet; unpicked variants are saved as inactive alternates in the vault.
+   - The user selects the active bullet; unpicked variants are saved as inactive alternates in the master record.

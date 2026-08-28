@@ -40,7 +40,7 @@ const program = new Command();
 
 program
   .name("rw")
-  .description("Resume Workshop (rw) — Career vault & high-precision Typst resume renderer")
+  .description("Resume Workshop (rw) — Master career record & high-precision Typst resume renderer")
   .version("0.1.0");
 
 // 1. init
@@ -53,9 +53,9 @@ program
 // 2. status
 program
   .command("status")
-  .description("Show summary of master career vault, active bullets per role, and target profiles")
+  .description("Show summary of master career record, active bullets per role, and target profiles")
   .option("-p, --profile <profile>", "Show detailed breakdown for a specific profile")
-  .option("-n, --notes <text>", "Set/update freetext context notes for career vault")
+  .option("-n, --notes <text>", "Set/update freetext context notes for master record")
   .action(statusCommand);
 
 // 3. validate
@@ -82,7 +82,7 @@ program
 // 6. build
 program
   .command("build")
-  .description("Compile all PDF & Markdown aliases from master vault")
+  .description("Compile all PDF & Markdown aliases from master record")
   .option("-p, --profile <profile>", "Build a specific profile alias")
   .option("-f, --format <formats>", "Comma-separated output formats: pdf,md (default: pdf,md)")
   .action(buildCommand);
@@ -100,10 +100,11 @@ program
   .command("preview")
   .description("Compile multi-view profile preview PDFs in dist/preview/<profile-id>/")
   .option("-p, --profile <profile>", "Target profile to preview (default: full-stack-software-engineer)")
-  .option("-v, --view <view>", "Specific view to target/open (resume, heatmap, full-vault)")
+  .option("-v, --view <view>", "Specific view to target/open (resume, heatmap, master)")
   .option("-o, --open", "Open PDF in OS system default viewer")
   .option("-m, --heatmap", "Target skill heatmap view")
-  .option("--full-vault", "Target full vault view (shaded inactive points)")
+  .option("--master", "Target master record view (shaded inactive points)")
+  .option("--full-vault", "Target master record view (alias)")
   .action(previewCommand);
 
 // 9. diff
@@ -123,7 +124,7 @@ const bulletCmd = program.command("bullet").description("Manage accomplishment b
 
 bulletCmd
   .command("list")
-  .description("List all bullets in the vault")
+  .description("List all bullets in the master record")
   .option("-e, --experience <id>", "Filter by experience ID")
   .action(listBullets);
 
@@ -165,7 +166,7 @@ bulletCmd
 
 bulletCmd
   .command("delete")
-  .description("Permanently delete a bullet from the vault")
+  .description("Permanently delete a bullet from the master record")
   .requiredOption("-i, --id <id>", "Bullet ID")
   .action(deleteBullet);
 

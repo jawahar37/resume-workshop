@@ -8,8 +8,8 @@
 
 ## 🌟 Key Concepts & Architecture
 
-1. **The Career Vault**: Your career history is not a static document you constantly delete and rewrite. It is a relational vault (SQLite + Drizzle ORM). Each role holds many bullet points, both active accomplishments and alternate points highlighting different dimensions of your work.
-2. **The Question & The Answer**: Job Descriptions are the *question* posed by recruiters and hiring managers; your resume is the *text that answers*. Store target JDs in the vault to analyze requirements and adapt profiles.
+1. **The Master Record**: Your career history is not a static document you constantly delete and rewrite. It is a relational master record (SQLite + Drizzle ORM). Each role holds many bullet points, both active accomplishments and saved points highlighting different dimensions of your work.
+2. **The Question & The Answer**: Job Descriptions are the *question* posed by recruiters and hiring managers; your resume is the *text that answers*. Store target JDs in the master record to analyze requirements and adapt profiles.
 3. **Typst Rendering**: Ultra-fast (~50ms) compilation with readable syntax and publication-grade typography.
 4. **Klinkenborg House Style**: Writing is revision. Every accomplishment bullet is composed, revised, and edited as a single, deliberate act.
 
@@ -20,7 +20,7 @@
 Resume Workshop includes four instruction-only AI agent skills:
 
 1. **`resume-bullet-drafter`**: Transforms raw work notes into quantified STAR bullets following the Verlyn Klinkenborg writing style (`references/writing-style.md`).
-2. **`jd-match-analyzer`**: Ingests JDs, extracts requirements into tags and weights, and performs gap analysis against the vault.
+2. **`jd-match-analyzer`**: Ingests JDs, extracts requirements into tags and weights, and performs gap analysis against the master record.
 3. **`recruiter-pitch-generator`**: Generates 30-second LinkedIn elevator pitches and cold outreach emails directly synthesized from active accomplishments.
 4. **`resume-importer`**: Parses unstructured text/markdown resumes into validated YAML and executes `rw import`.
 
@@ -54,7 +54,7 @@ npm link
 
 *Runs headlessly in Linux CI/CD pipelines & Docker containers without requiring a display server.*
 
-### 2. Initialize the Vault
+### 2. Initialize the Master Record
 
 ```bash
 # Seed the database with complete example data
@@ -96,18 +96,18 @@ Resume Workshop treats **AI Agents as first-class interfaces**. You interact wit
 
 ---
 
-### 1. Import Resume into Vault
+### 1. Import Resume into Master Record
 Use the **`resume-importer`** skill ([`.agents/skills/resume-importer`](file:///.agents/skills/resume-importer/SKILL.md)) to parse raw text, Markdown, or LinkedIn exports into relational SQLite entities:
 
 ```bash
-# Vault Import Grounding:
+# Master Record Import Grounding:
 rw import --yaml data/imports/jawahar-pinnelli.yaml --replace
 ```
 
 ---
 
 ### 2. Analyze Target Job Descriptions & Skill Gaps
-Use the **`jd-match-analyzer`** skill ([`.agents/skills/jd-match-analyzer`](file:///.agents/skills/jd-match-analyzer/SKILL.md)) to ingest job descriptions, extract key requirements, and identify missing skill tags against existing vault bullets:
+Use the **`jd-match-analyzer`** skill ([`.agents/skills/jd-match-analyzer`](file:///.agents/skills/jd-match-analyzer/SKILL.md)) to ingest job descriptions, extract key requirements, and identify missing skill tags against existing master record bullets:
 
 ```bash
 # Job Description Grounding:
@@ -129,7 +129,7 @@ rw bullet update --id "acme-kafka-pipeline" --content "Engineered a distributed 
 ---
 
 ### 4. Generate Recruiter Pitches & Outreach
-Use the **`recruiter-pitch-generator`** skill ([`.agents/skills/recruiter-pitch-generator`](file:///.agents/skills/recruiter-pitch-generator/SKILL.md)) to synthesize targeted 30-second LinkedIn elevator pitches and cold outreach messages grounded in master vault accomplishments.
+Use the **`recruiter-pitch-generator`** skill ([`.agents/skills/recruiter-pitch-generator`](file:///.agents/skills/recruiter-pitch-generator/SKILL.md)) to synthesize targeted 30-second LinkedIn elevator pitches and cold outreach messages grounded in master accomplishments.
 
 ---
 
@@ -157,14 +157,14 @@ rw build
 
 ## 📖 CLI Command Reference
 
-### Data & Vault Management
+### Data & Master Record Management
 
 | Command | Description |
 | :--- | :--- |
 | `rw init [--force]` | Initialize `.data/resume.db` from seed and create `data/resume.yaml` |
-| `rw status [--profile <id>]` | Show vault overview, active/alternate counts, and profiles |
+| `rw status [--profile <id>]` | Show master record overview, active/saved counts, and profiles |
 | `rw validate` | Verify database integrity and profile bullet references |
-| `rw import --yaml <file> [--replace]` | Import structured YAML into vault (`--replace` wipes seed data) |
+| `rw import --yaml <file> [--replace]` | Import structured YAML into master record (`--replace` wipes seed data) |
 | `rw export [--output <file>]` | Export database state as structured YAML snapshot |
 | `rw diff` | Compare database state with `data/resume.yaml` |
 
@@ -172,7 +172,7 @@ rw build
 
 | Command | Description |
 | :--- | :--- |
-| `rw experience list` | List all roles and companies in the vault |
+| `rw experience list` | List all roles and companies in the master record |
 | `rw experience add --id <id> --company <c> --title <t> --start <date>` | Add a new work experience |
 | `rw bullet list [--experience <id>]` | List bullets with active/alternate status |
 | `rw bullet add --experience <id> --content <text> [--active\|--inactive] [--tags <t1,t2>]` | Add bullet point |
@@ -215,7 +215,7 @@ resume-workshop/
 │   ├── imports/                       # User YAML resume imports
 │   └── jds/                           # Target Job Description text files
 │
-├── .data/                             # [GITIGNORED] Local vault database & imported resumes
+├── .data/                             # [GITIGNORED] Local database & imported resumes
 │   └── resume.db
 │
 ├── src/

@@ -122,9 +122,9 @@ export function filterResumeForProfile(
 }
 
 /**
- * Creates a Full Vault view showing ALL bullets (active & inactive) for each experience.
+ * Creates a Master view showing ALL bullets (active & inactive) for each experience.
  */
-export function loadFullVaultResumeView(
+export function loadMasterResumeView(
   resume: LoadedResume,
   profileId?: string
 ): FilteredResumeView {
@@ -168,7 +168,7 @@ export function loadFullVaultResumeView(
 
   return {
     profileId: profile?.id ?? null,
-    profileName: (profile?.name ?? "Master Vault") + " (Full Vault View)",
+    profileName: (profile?.name ?? "Master Record") + " (Master View)",
     maxPages: 99,
     personalInfo: {
       ...resume.personalInfo,
@@ -187,3 +187,6 @@ export function loadFullVaultResumeView(
     },
   };
 }
+
+/** Backwards compatibility alias */
+export const loadFullVaultResumeView = loadMasterResumeView;

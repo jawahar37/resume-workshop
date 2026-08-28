@@ -13,7 +13,7 @@ export const personalInfo = sqliteTable("personal_info", {
   github: text("github"),
   linkedin: text("linkedin"),
   summary: text("summary"),
-  notes: text("notes"), // Freetext career vault context notes
+  notes: text("notes"), // Freetext master record context notes
   updatedAt: text("updated_at").default(sql`(CURRENT_TIMESTAMP)`),
 });
 

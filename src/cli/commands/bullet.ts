@@ -179,5 +179,5 @@ export async function deleteBullet(options: { id: string }) {
 
   const { db } = getDatabase();
   await db.delete(schema.bullets).where(eq(schema.bullets.id, options.id));
-  console.log(pc.red(`✓ Permanently deleted bullet [${options.id}] from vault`));
+  console.log(pc.red(`✓ Permanently deleted bullet [${options.id}] from master record`));
 }

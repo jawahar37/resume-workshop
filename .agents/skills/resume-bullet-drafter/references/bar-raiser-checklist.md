@@ -71,8 +71,8 @@ A core principle applied across all skills:
 
 > **When improving or expanding bullets, never simply rephrase text the user already has.**
 
-- The user's existing vault is the **starting point, not the ceiling**.
-- Mine JDs, domain signal catalogs, and architectural pattern libraries for **technologies, mechanisms, and signals the vault doesn't yet mention**.
+- The user's existing master record is the **starting point, not the ceiling**.
+- Mine JDs, domain signal catalogs, and architectural pattern libraries for **technologies, mechanisms, and signals the master record doesn't yet mention**.
 - Draft entirely new bullets that expand the user's demonstrated skill vocabulary, covering gaps that make the resume compelling for new domains.
 - Only refine existing bullet wording when the user **explicitly asks** to improve a specific point.
 

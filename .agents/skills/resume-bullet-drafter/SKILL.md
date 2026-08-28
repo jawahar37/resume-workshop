@@ -26,13 +26,13 @@ Use when expanding a key role (e.g. current SDE2/Senior role) to discover hidden
    - **Cross-Role Consolidation**: Identifying skills mentioned in older roles (e.g., testing, reporting, onboarding) and pulling them forward into the current role to tighten older roles.
    - **Bar-Raiser Stress Test**: Ask "How would you defend this bullet in a 45-minute behavioral interview? What follow-up questions would expose gaps?"
 3. **Synthesis**: Turn raw answers into sharp, quantified STAR bullets following Klinkenborg house style.
-4. **Vault Integration**: Add new bullets to vault and adjust alternate points.
+4. **Master Record Integration**: Add new bullets to master record and adjust alternate points.
 
 ### Mode 3: JD-Driven Scope Expansion
 Use when the user says "write more points," "expand," "what else," "target for X company," or "write for FinTech/B2B/Cloud." This mode creates entirely new content instead of refining existing bullets.
 
 #### Expansion Workflow:
-1. **Mine, Don't Mirror**: Read the target JD (or domain signal catalog from `references/bar-raiser-checklist.md` if no specific JD). Extract technologies, architectural patterns, and scale metrics that have **zero coverage** in the user's existing vault.
+1. **Mine, Don't Mirror**: Read the target JD (or domain signal catalog from `references/bar-raiser-checklist.md` if no specific JD). Extract technologies, architectural patterns, and scale metrics that have **zero coverage** in the user's existing master record.
 2. **Draft Net-New Bullets**: For each uncovered signal, draft a brand-new accomplishment bullet that credibly incorporates that technology into the user's actual work context. These are NOT rewrites of existing bullets.
 3. **Domain Pivot on Demand**: When the user says "target for X" or "write for Y," switch to the corresponding domain signal catalog and generate bullets using that domain's specific vocabulary:
    - "Target Google/Microsoft" → QPS, P99 SLAs, gRPC/Protobuf, OpenTelemetry, canary rollouts, backward-compatible APIs
@@ -45,8 +45,8 @@ Use when the user says "write more points," "expand," "what else," "target for X
    - "Target Gaming" → WebSocket real-time, tick-rate optimization, ECS architecture, matchmaking, state sync
    - "Write for Consumer/EdTech" → mobile-first, push notifications, engagement funnels, accessibility, offline-first sync
    - "Target Consulting" → legacy modernization, mainframe migration, vendor API integration, SOW delivery
-4. **Present as Additive Options**: Offer 6–8 net-new bullets organized by domain signal, clearly labeled as vault expansion candidates (not replacements).
-5. **Vault Integration**: Selected bullets are added as new inactive alternates in the vault, available for future profile targeting.
+4. **Present as Additive Options**: Offer 6–8 net-new bullets organized by domain signal, clearly labeled as master record expansion candidates (not replacements).
+5. **Master Record Integration**: Selected bullets are added as new inactive alternates in the master record, available for future profile targeting.
 
 ## Core Strategic Guidelines
 
@@ -117,7 +117,7 @@ Reference `.agents/skills/resume-bullet-drafter/references/writing-style.md`:
 ### Step 3: Confirm Selection & Inactive Alternates
 Ask the user:
 1. "Which variant best captures what you want to highlight for your target profile?"
-2. "Would you like to save the alternate variant(s) as inactive bullets in your vault for other role profiles?"
+2. "Would you like to save the alternate variant(s) as inactive bullets in your master record for other role profiles?"
 
 ### Step 4: Run CLI Commands
 

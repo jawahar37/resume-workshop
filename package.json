@@ -1,7 +1,7 @@
 {
   "name": "resume-workshop",
   "version": "0.1.0",
-  "description": "Career vault and resume renderer using Typst, SQLite, and Don Norman design principles",
+  "description": "Master career record and resume renderer using Typst, SQLite, and Don Norman design principles",
   "type": "module",
   "main": "dist/cli/index.js",
   "bin": {

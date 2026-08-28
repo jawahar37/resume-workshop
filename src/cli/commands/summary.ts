@@ -12,7 +12,7 @@ export async function showSummary() {
   const p = rows[0];
 
   if (!p) {
-    console.error(pc.red("Error: Personal info not found in vault."));
+    console.error(pc.red("Error: Personal info not found in master record."));
     process.exit(1);
   }
 
@@ -71,7 +71,7 @@ export async function updateSummary(options: { text?: string; file?: string }) {
     await db.update(schema.personalInfo).set({ summary: text }).where(eq(schema.personalInfo.id, rows[0].id));
   }
 
-  console.log(pc.green("✓ Updated professional summary in vault."));
+  console.log(pc.green("✓ Updated professional summary in master record."));
 }
 
 export async function addSummaryLine(options: { line: string }) {
@@ -83,7 +83,7 @@ export async function addSummaryLine(options: { line: string }) {
   const { db } = getDatabase();
   const rows = await db.select().from(schema.personalInfo);
   if (rows.length === 0) {
-    console.error(pc.red("Error: Personal info not found in vault."));
+    console.error(pc.red("Error: Personal info not found in master record."));
     process.exit(1);
   }
 
@@ -104,7 +104,7 @@ export async function removeSummaryLine(options: { index: string }) {
   const { db } = getDatabase();
   const rows = await db.select().from(schema.personalInfo);
   if (rows.length === 0) {
-    console.error(pc.red("Error: Personal info not found in vault."));
+    console.error(pc.red("Error: Personal info not found in master record."));
     process.exit(1);
   }
 

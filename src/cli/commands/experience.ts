@@ -107,7 +107,7 @@ export async function showExperience(options: { id: string }) {
   const { db } = getDatabase();
   const [exp] = await db.select().from(schema.experiences).where(eq(schema.experiences.id, options.id));
   if (!exp) {
-    console.error(pc.red(`Error: Experience [${options.id}] not found in vault.`));
+    console.error(pc.red(`Error: Experience [${options.id}] not found in master record.`));
     process.exit(1);
   }
 

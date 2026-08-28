@@ -3,7 +3,7 @@ import path from "node:path";
 import { execSync } from "node:child_process";
 import { renderTypstSource } from "../typst/renderer.js";
 import { renderTypstSkillHeatmapSource } from "../typst/heatmap-renderer.js";
-import { renderTypstFullVaultSource } from "../typst/full-vault-renderer.js";
+import { renderTypstMasterSource } from "../typst/master-renderer.js";
 import type { FilteredResumeView } from "../../loader/filter.js";
 
 export function isTypstInstalled(): boolean {
@@ -21,6 +21,7 @@ export interface BuildPdfOptions {
   keepSource?: boolean;
   heatmap?: boolean;
   llm?: boolean;
+  master?: boolean;
   fullVault?: boolean;
 }
 
@@ -37,8 +38,8 @@ export function compileTypstToPdf(
   resume: FilteredResumeView,
   options: BuildPdfOptions
 ): BuildPdfResult {
-  const typContent = options.fullVault
-    ? renderTypstFullVaultSource(resume)
+  const typContent = (options.master || options.fullVault)
+    ? renderTypstMasterSource(resume)
     : options.heatmap
     ? renderTypstSkillHeatmapSource(resume, { llm: options.llm })
     : renderTypstSource(resume);

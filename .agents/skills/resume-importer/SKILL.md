@@ -1,8 +1,8 @@
 ---
 name: resume-importer
 description: |
-  Parses raw unstructured resume text, markdown, or LinkedIn exports into validated Resume Workshop YAML structure and imports it into the SQLite career vault.
-  Use when the user pastes their resume into chat, wants to import historical career data, or wants to seed/replace their vault.
+  Parses raw unstructured resume text, markdown, or LinkedIn exports into validated Resume Workshop YAML structure and imports it into the SQLite master career record.
+  Use when the user pastes their resume into chat, wants to import historical career data, or wants to seed/replace their master record.
 ---
 
 # Resume Importer

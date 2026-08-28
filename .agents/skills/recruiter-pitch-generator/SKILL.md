@@ -1,13 +1,13 @@
 ---
 name: recruiter-pitch-generator
 description: |
-  Generates targeted recruiter outreach messages, 30-second LinkedIn elevator pitches, and cold emails to hiring managers directly synthesized from the master career vault.
+  Generates targeted recruiter outreach messages, 30-second LinkedIn elevator pitches, and cold emails to hiring managers directly synthesized from the master career record.
   Use when the user wants to reach out to recruiters, apply to a specific company, or pitch their background for a role.
 ---
 
 # Recruiter Pitch Generator
 
-Translates your career vault accomplishments into concise, compelling recruiter communications and cold outreach.
+Translates your master career record accomplishments into concise, compelling recruiter communications and cold outreach.
 
 ## Strategic Positioning Focus
 

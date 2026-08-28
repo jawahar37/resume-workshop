@@ -2,7 +2,7 @@ import pc from "picocolors";
 import { loadFullResume } from "../../loader/query.js";
 
 export async function validateCommand() {
-  console.log(pc.bold("\n🔍 Validating Career Vault Integrity...\n"));
+  console.log(pc.bold("\n🔍 Validating Master Record Integrity...\n"));
   const resume = await loadFullResume();
   const errors: string[] = [];
   const warnings: string[] = [];
@@ -17,7 +17,7 @@ export async function validateCommand() {
 
   // Check experiences
   if (resume.experiences.length === 0) {
-    warnings.push("Vault has 0 experiences defined.");
+    warnings.push("Master record has 0 experiences defined.");
   }
 
   const allBulletIds = new Set<string>();

@@ -26,7 +26,7 @@ export async function importCommand(options: { yaml: string; replace?: boolean }
         `✓ Successfully imported ${res.expCount} experiences, ${res.bulletCount} bullets, and ${res.tagCount} tags.`
       )
     );
-    console.log(`Run ${pc.magenta("rw status")} to inspect the updated vault.\n`);
+    console.log(`Run ${pc.magenta("rw status")} to inspect the updated master record.\n`);
   } catch (err: any) {
     console.error(pc.red(`\n❌ Import failed: ${err.message}`));
     process.exit(1);

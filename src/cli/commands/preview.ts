@@ -4,7 +4,7 @@ import { execSync } from "node:child_process";
 import pc from "picocolors";
 import Table from "cli-table3";
 import { loadFullResume } from "../../loader/query.js";
-import { filterResumeForProfile, loadFullVaultResumeView } from "../../loader/filter.js";
+import { filterResumeForProfile, loadMasterResumeView } from "../../loader/filter.js";
 import { compileTypstToPdf } from "../../renderers/pdf/build.js";
 
 export async function previewCommand(options: {
@@ -12,12 +12,13 @@ export async function previewCommand(options: {
   open?: boolean;
   view?: string;
   heatmap?: boolean;
+  master?: boolean;
   fullVault?: boolean;
 }) {
   const profileId = options.profile || "full-stack-software-engineer";
   const resume = await loadFullResume();
   const filteredView = filterResumeForProfile(resume, profileId);
-  const fullVaultView = loadFullVaultResumeView(resume, profileId);
+  const masterView = loadMasterResumeView(resume, profileId);
 
   // Target profile preview directory: dist/preview/<profile-id>/
   const profileDir = path.resolve(process.cwd(), `dist/preview/${profileId}`);
@@ -49,13 +50,13 @@ export async function previewCommand(options: {
     llm: true,
   });
 
-  // 3. Full Career Vault View (Shaded inactive bullets)
-  const fullVaultPdfPath = path.join(profileDir, "3-full-vault.pdf");
-  const fullVaultTypPath = path.join(profileDir, "3-full-vault.typ");
-  const res3 = compileTypstToPdf(fullVaultView, {
-    outputPath: fullVaultPdfPath,
-    sourcePath: fullVaultTypPath,
-    fullVault: true,
+  // 3. Master Record View (Shaded inactive bullets)
+  const masterPdfPath = path.join(profileDir, "3-master.pdf");
+  const masterTypPath = path.join(profileDir, "3-master.typ");
+  const res3 = compileTypstToPdf(masterView, {
+    outputPath: masterPdfPath,
+    sourcePath: masterTypPath,
+    master: true,
   });
 
   // Display Table of Multi-View PDF Outputs
@@ -82,9 +83,9 @@ export async function previewCommand(options: {
       res2.success ? pc.green("✓ Built") : pc.red("Failed"),
     ],
     [
-      pc.bold(pc.yellow("3. Full Vault")),
-      "3-full-vault.pdf",
-      "All points (inactive shaded)",
+      pc.bold(pc.yellow("3. Master Record")),
+      "3-master.pdf",
+      "All points (saved points shaded)",
       res3.success ? pc.green("✓ Built") : pc.red("Failed"),
     ]
   );
@@ -97,8 +98,13 @@ export async function previewCommand(options: {
     let targetPdf = resumePdfPath;
     if (options.view === "heatmap" || options.heatmap) {
       targetPdf = heatmapPdfPath;
-    } else if (options.view === "full-vault" || options.fullVault) {
-      targetPdf = fullVaultPdfPath;
+    } else if (
+      options.view === "master" ||
+      options.view === "full-vault" ||
+      options.master ||
+      options.fullVault
+    ) {
+      targetPdf = masterPdfPath;
     }
 
     if (fs.existsSync(targetPdf)) {

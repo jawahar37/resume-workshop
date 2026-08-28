@@ -22,7 +22,7 @@ export async function statusCommand(options: { profile?: string; notes?: string 
         notes: options.notes,
       });
     }
-    console.log(pc.green("✓ Updated Career Vault Freetext Context Notes"));
+    console.log(pc.green("✓ Updated Master Record Freetext Context Notes"));
   }
 
   const resume = await loadFullResume();
@@ -52,12 +52,12 @@ export async function statusCommand(options: { profile?: string; notes?: string 
     return;
   }
 
-  // Global vault status
-  console.log(pc.bold("\n🗄️  Career Vault Status — Master Overview\n"));
+  // Global master record status
+  console.log(pc.bold("\n🗄️  Master Record Status — Overview\n"));
   console.log(`Professional: ${pc.bold(pc.cyan(resume.personalInfo.name))} (${resume.personalInfo.title})`);
   console.log(`Contact: ${resume.personalInfo.email} | ${resume.personalInfo.location || "Remote"}`);
   if (resume.personalInfo.notes) {
-    console.log(`${pc.bold("Freetext Vault Context Notes:")} ${pc.gray(resume.personalInfo.notes)}`);
+    console.log(`${pc.bold("Freetext Master Context Notes:")} ${pc.gray(resume.personalInfo.notes)}`);
   }
   console.log("");
 
