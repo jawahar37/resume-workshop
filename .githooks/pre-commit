@@ -1,0 +1,12 @@
+#!/bin/sh
+# Resume Workshop Pre-Commit Hook
+# 1. Fast PII & Secret scan on staged files (~30ms)
+# 2. Automated test suite
+
+set -e
+
+# Run PII & Secret Safety check
+npx tsx scripts/check-staged.ts
+
+# Run tests
+npm test --silent

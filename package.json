@@ -15,7 +15,11 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate": "tsx src/db/migrate.ts",
     "db:seed": "tsx src/db/seed.ts",
-    "test": "tsx --test test/**/*.test.ts"
+    "test": "tsx --test test/**/*.test.ts",
+    "check:pii": "tsx scripts/check-staged.ts",
+    "check:pii:all": "tsx scripts/check-staged.ts --all",
+    "precommit": "tsx scripts/check-staged.ts && npm test",
+    "prepare": "git config core.hooksPath .githooks 2>/dev/null || true"
   },
   "keywords": [
     "resume",
